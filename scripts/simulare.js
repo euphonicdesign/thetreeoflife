@@ -676,7 +676,7 @@ function desenareContor(){
     ctx.fillText(total_frunze_pierdute + " frunze pierdute" , x_text_legenda, y_text_legenda + 90);
 
     ctx.fillStyle = CULOARE_TEXT_PROTECTII;
-    ctx.fillText("strat protector (" + RATA_TRANSMITERE_MASCA * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
+    ctx.fillText("strat protector (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
     ctx.fillText("acasa (100%)" , x_text_legenda, y_text_legenda + 150);
     //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);
 }
