@@ -43,7 +43,7 @@ var METODA_PREVENTIE_AFARA = 2;
 
 var RATA_TRANSMITERE_AFARA = 1;
 var RATA_TRANSMITERE_ACASA = 0;
-var RATA_TRANSMITERE_MASCA = 0.5;
+var RATA_TRANSMITERE_MASCA = 0.3;
 
 var RATA_PENETRARE_ACASA = 0;
 var RATA_PENETRARE_MASCA = RATA_TRANSMITERE_MASCA;
@@ -489,16 +489,16 @@ function actualizareSuprafataJoc() {
 
 function interactioneaza(e) {
     // calcul coordonate mouse raportat la pozitie canvas
-    console.log("x: " + e.clientX + " y: " + e.clientY);
+    //console.log("x: " + e.clientX + " y: " + e.clientY);
 
     var rect = mySuprafataJoc.canvas.getBoundingClientRect();
 
-    console.log("x canvas: " + rect.left + " y canvas: " + rect.right);
+    //console.log("x canvas: " + rect.left + " y canvas: " + rect.right);
 
     var mouseX = e.clientX - rect.left;
     var mouseY = e.clientY - canvasPositionY; //- rect.right;
 
-    console.log("x relativ: " + mouseX + " y relativ: " + mouseY);
+    //console.log("x relativ: " + mouseX + " y relativ: " + mouseY);
 
     for(let i=0; i<vector_jetoane.length; i++){
         distanta_click_x = mouseX - vector_jetoane[i].x;
@@ -712,7 +712,7 @@ function schimbareMetodePreventie(){
 
 function pauzaJoc() {
     pauza_joc = !pauza_joc;
-    console.log("pauza = " + pauza_joc)
+    //console.log("pauza = " + pauza_joc)
     /*
     for(let i=0; i<vector_tuburi.length; i++){
       vector_tuburi[i].schimbareculoare();
