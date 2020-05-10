@@ -376,6 +376,8 @@ function tub (jeton_intrare, jeton_iesire, culoare, tip_tub) {
     this.flux_x2 = this.x1 + this.lungimetub_x * this.procent_umplere;
     this.flux_y2 = this.y1 + this.lungimetub_y * this.procent_umplere;
     this.stop_umplere = false;
+    this.tub_golit = false;
+
 
     this.desenare = function() {
         ctx = mySuprafataJoc.context;
@@ -422,6 +424,20 @@ function tub (jeton_intrare, jeton_iesire, culoare, tip_tub) {
             this.jeton_iesire.stare_frunza = FRUNZA_PENETRATA;
             this.stop_umplere = true;
             //culoarea vine cu intarziere dupa ce se umple jetonul 100%
+        }
+
+        //goleste tub daca jeton intrare este nontransmisibil
+        if(this.jeton_intrare.staredetransmitere == false && this.tub_golit == false){
+            if (this.jeton_intrare.stare_frunza == FRUNZA_PIERDUTA || this.jeton_intrare.stare_frunza == FRUNZA_VINDECATA){
+                this.tub_golit = true;
+                this.procent_umplere = 0;
+
+                this.flux_x2 = this.x1 + this.lungimetub_x * this.procent_umplere;
+                this.flux_y2 = this.y1 + this.lungimetub_y * this.procent_umplere;
+
+                //console.log("tub golit");
+            }
+
         }
 
     }
