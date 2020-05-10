@@ -139,6 +139,35 @@ var canvasPositionY = 176;
 
 var MARJA_POZITIONARE_MOUSE = 0.2 * RAZA_ELEMENT;
 
+//LIMBA
+var LIMBA_ENGLEZA = 0;
+var LIMBA_ROMANA = 1;
+var LIMBA_SELECTATA = LIMBA_ROMANA;
+
+//TEXT LIMBI
+var TEXT_TITLU_RO = "Copacul Vietii";
+var TEXT_TITLU_EN = "The Tree of Life";
+var TEXT_LEGENDA_FRUNZE_NORMALE_RO = "frunze normale";
+var TEXT_LEGENDA_FRUNZE_NORMALE_EN = "normal";
+var TEXT_LEGENDA_FRUNZE_PATRUNSE_RO = "frunze atinse";
+var TEXT_LEGENDA_FRUNZE_PATRUNSE_EN = "touched";
+var TEXT_LEGENDA_FRUNZE_VINDECATE_RO = "frunze vindecate";
+var TEXT_LEGENDA_FRUNZE_VINDECATE_EN = "healed";
+var TEXT_LEGENDA_FRUNZE_PIERDUTE_RO = "frunze pierdute";
+var TEXT_LEGENDA_FRUNZE_PIERDUTE_EN = "lost";
+var TEXT_LEGENDA_MASCA_RO = "strat protector";
+var TEXT_LEGENDA_MASCA_EN = "cover layer";
+var TEXT_LEGENDA_ACASA_RO = "strat acasa";
+var TEXT_LEGENDA_ACASA_EN = "home layer";
+
+var TEXT_TITLU = TEXT_TITLU_EN;
+var TEXT_LEGENDA_FRUNZE_NORMALE = TEXT_LEGENDA_FRUNZE_NORMALE_EN;
+var TEXT_LEGENDA_FRUNZE_PATRUNSE = TEXT_LEGENDA_FRUNZE_PATRUNSE_EN;
+var TEXT_LEGENDA_FRUNZE_VINDECATE = TEXT_LEGENDA_FRUNZE_VINDECATE_EN;
+var TEXT_LEGENDA_FRUNZE_PIERDUTE = TEXT_LEGENDA_FRUNZE_PIERDUTE_EN;
+var TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_EN;
+var TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_EN;
+
 //captura apasare taste
 const input = document.querySelector('html');
 input.onkeydown = trimiteComenziJoc;
@@ -159,7 +188,7 @@ var mySuprafataJoc = {
       this.canvas.addEventListener("click", interactioneaza, false);
       //this.canvas.addEventListener("dblclick", doSomething, false);
 
-      document.body.insertBefore(this.canvas, document.body.childNodes[4]);
+      document.body.insertBefore(this.canvas, document.body.childNodes[3]);
       this.interval = setInterval(actualizareSuprafataJoc, timp_joc);
 
       //document.querySelector("canvas").onclick = function(){
@@ -686,15 +715,16 @@ function desenareContor(){
     ctx.font = "20px Arial";
     //ctx.lineWidth = 0.1;
     //ctx.strokeStyle = "black";
-    ctx.fillText(total_frunze_normale + " frunze normale" , x_text_legenda, y_text_legenda);
-    ctx.fillText(total_frunze_penetrate + " frunze patrunse" , x_text_legenda, y_text_legenda + 30);
-    ctx.fillText(total_frunze_vindecate + " frunze vindecate" , x_text_legenda, y_text_legenda + 60);
-    ctx.fillText(total_frunze_pierdute + " frunze pierdute" , x_text_legenda, y_text_legenda + 90);
+    ctx.fillText(total_frunze_normale + " " + TEXT_LEGENDA_FRUNZE_NORMALE, x_text_legenda, y_text_legenda);
+    ctx.fillText(total_frunze_penetrate + " " + TEXT_LEGENDA_FRUNZE_PATRUNSE , x_text_legenda, y_text_legenda + 30);
+    ctx.fillText(total_frunze_vindecate + " " + TEXT_LEGENDA_FRUNZE_VINDECATE , x_text_legenda, y_text_legenda + 60);
+    ctx.fillText(total_frunze_pierdute + " " + TEXT_LEGENDA_FRUNZE_PIERDUTE , x_text_legenda, y_text_legenda + 90);
 
     ctx.fillStyle = CULOARE_TEXT_PROTECTII;
-    ctx.fillText("strat protector (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
-    ctx.fillText("acasa (100%)" , x_text_legenda, y_text_legenda + 150);
+    ctx.fillText(TEXT_LEGENDA_MASCA + " (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
+    ctx.fillText(TEXT_LEGENDA_ACASA + " (100%)" , x_text_legenda, y_text_legenda + 150);
     //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);
+
 }
 
 function schimbareMetodePreventie(){
@@ -864,4 +894,35 @@ function trimiteComenziJoc(e){
     }
     //if (e.code === "ArrowDown" || e.code === "ArrowLeft"){
     //}
+}
+
+function selectieLimbaEngleza(){
+    LIMBA_SELECTATA = LIMBA_ENGLEZA;
+
+    TEXT_TITLU = TEXT_TITLU_EN;
+    TEXT_LEGENDA_FRUNZE_NORMALE = TEXT_LEGENDA_FRUNZE_NORMALE_EN;
+    TEXT_LEGENDA_FRUNZE_PATRUNSE = TEXT_LEGENDA_FRUNZE_PATRUNSE_EN;
+    TEXT_LEGENDA_FRUNZE_VINDECATE = TEXT_LEGENDA_FRUNZE_VINDECATE_EN;
+    TEXT_LEGENDA_FRUNZE_PIERDUTE = TEXT_LEGENDA_FRUNZE_PIERDUTE_EN;
+    TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_EN;
+    TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_EN;
+
+    var titlu = document.querySelector('h1');
+    titlu.textContent = TEXT_TITLU;
+    //console.log(titlu.textContent);
+}
+function selectieLimbaRomana(){
+    LIMBA_SELECTATA = LIMBA_ROMANA;
+
+    TEXT_TITLU = TEXT_TITLU_RO;
+    TEXT_LEGENDA_FRUNZE_NORMALE = TEXT_LEGENDA_FRUNZE_NORMALE_RO;
+    TEXT_LEGENDA_FRUNZE_PATRUNSE = TEXT_LEGENDA_FRUNZE_PATRUNSE_RO;
+    TEXT_LEGENDA_FRUNZE_VINDECATE = TEXT_LEGENDA_FRUNZE_VINDECATE_RO;
+    TEXT_LEGENDA_FRUNZE_PIERDUTE = TEXT_LEGENDA_FRUNZE_PIERDUTE_RO;
+    TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_RO;
+    TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_RO;
+
+    var titlu = document.querySelector('h1');
+    titlu.textContent = TEXT_TITLU;
+    //console.log(titlu.textContent);
 }
