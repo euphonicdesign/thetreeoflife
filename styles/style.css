@@ -44,8 +44,8 @@ body {
 h1 {
   margin: 0;
   padding: 20px 0;
-  color: #66c2ff;
-  text-shadow: 3px 3px 1px black;
+  color: #79d2a6;
+  text-shadow: 3px 3px 1px #f1f1f1;
 }
 
 img {
@@ -62,7 +62,7 @@ table {
 .linkuri {
   text-align: right;
   font-size: 20px;
-  padding-top: 4rem;
+  padding-top: 3rem;
   margin: 0;
   /*padding: 20px 0;*/
 
