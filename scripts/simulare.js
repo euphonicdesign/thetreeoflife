@@ -175,11 +175,17 @@ var TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_EN;
 const input = document.querySelector('html');
 input.onkeydown = trimiteComenziJoc;
 
+function restart(){
+  location.reload();
+  return false;
+}
+
 function startJoc(){
   generare_retea_jetoane();
   generare_retea_tuburi();
   setare_conditii_initiale();
   mySuprafataJoc.creare();
+  setare_limba_preferata();
 }
 
 var mySuprafataJoc = {
@@ -901,7 +907,37 @@ function trimiteComenziJoc(e){
 
 function selectieLimbaEngleza(){
     LIMBA_SELECTATA = LIMBA_ENGLEZA;
+    actualizareLimba();
+    salvarePreferintaLimba();
+}
+function selectieLimbaRomana(){
+    LIMBA_SELECTATA = LIMBA_ROMANA;
+    actualizareLimba();
+    salvarePreferintaLimba();
+}
 
+function salvarePreferintaLimba() {
+  //console.log("se salveaza limba " + LIMBA_SELECTATA);
+  localStorage.setItem('language', LIMBA_SELECTATA);
+}
+
+function setare_limba_preferata() {
+  if(!localStorage.getItem('language')) {
+    salvarePreferintaLimba();
+    //console.log("setare limba initiala " + LIMBA_SELECTATA);
+  } else {
+    LIMBA_SELECTATA = localStorage.getItem('language');
+    //console.log("limba preferata salvata " + LIMBA_SELECTATA + " . Se seteaza limba preferata.");
+    actualizareLimba();
+  }
+}
+
+function actualizareLimba(){
+  //console.log("LIMBA_SELECTATA: " + LIMBA_SELECTATA)
+  var titlu = document.querySelector('h1');
+  var link_pauza = document.getElementById("pauza");
+
+  if (LIMBA_SELECTATA == LIMBA_ENGLEZA){
     TEXT_TITLU = TEXT_TITLU_EN;
     TEXT_ZILE_TRECUTE = TEXT_ZILE_TRECUTE_EN;
     TEXT_LEGENDA_FRUNZE_NORMALE = TEXT_LEGENDA_FRUNZE_NORMALE_EN;
@@ -911,13 +947,10 @@ function selectieLimbaEngleza(){
     TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_EN;
     TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_EN;
 
-    var titlu = document.querySelector('h1');
     titlu.textContent = TEXT_TITLU;
-    //console.log(titlu.textContent);
-}
-function selectieLimbaRomana(){
-    LIMBA_SELECTATA = LIMBA_ROMANA;
-
+    link_pauza.textContent = "Pause";
+  }
+  else{
     TEXT_TITLU = TEXT_TITLU_RO;
     TEXT_ZILE_TRECUTE = TEXT_ZILE_TRECUTE_RO;
     TEXT_LEGENDA_FRUNZE_NORMALE = TEXT_LEGENDA_FRUNZE_NORMALE_RO;
@@ -927,7 +960,7 @@ function selectieLimbaRomana(){
     TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_RO;
     TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_RO;
 
-    var titlu = document.querySelector('h1');
     titlu.textContent = TEXT_TITLU;
-    //console.log(titlu.textContent);
+    link_pauza.textContent = "Pauza";
+  }
 }
