@@ -12,9 +12,22 @@ var CANVAS_WIDTH_V2 = 1200;
 var CANVAS_HEIGHT_V2 = 700;
 
 //canvas
-var canvas_width = CANVAS_WIDTH_V1;
-var canvas_height = CANVAS_HEIGHT_V1;
-var y_linie_mijloc = canvas_height / 2 - 100 + 25/2;
+var CANVAS_WIDTH = CANVAS_WIDTH_V1;
+var CANVAS_HEIGHT = CANVAS_HEIGHT_V1;
+var y_linie_mijloc = CANVAS_HEIGHT / 2 - 100 + 25/2;
+
+var LUNGIME_REZERVOR = 90;
+var INALTIME_REZERVOR = 174;
+var IDENTARE_VERTICALA_GRUP_LEGENDA = 20;
+
+//var x_grup_legenda = 15;
+//var y_grup_legenda = 460;
+var x_grup_legenda = 15;
+var y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
+
+//CULORI
+var CULOARE_TEXT_LEGENDA = "#002e4d";
+var CULOARE_TEXT_PROTECTII = "grey";
 
 //temporizare
 var accelerare_timp = 5;
@@ -116,25 +129,20 @@ var me2_x = jeton_model_x;
 var me2_y = jeton_model_y + 100;
 
 //GRUP_LEGENDA (Rezervor + Legenda)
-var xGrupLegenda = 15;
-var yGrupLegenda = 440;
-var distantareRezervorLegenda = 30;
+var distantareOrizontalaRezervorLegenda = 30;
 var FONT_TEXT_LEGENDA = "20px Arial";
-var IDENTARE_TEXT_LEGENDA = 7;
-
+var IDENTARE_VERTICALA_TEXT_LEGENDA = 7;
 
 //rezervor
 var nivelApaRezervor = 50;
-var xRezervor = xGrupLegenda;
-var yRezervor = yGrupLegenda;
-var lungimeRezervor = 90;
-var inaltimeRezervor = 174;
+var xRezervor = x_grup_legenda;
+var yRezervor = y_grup_legenda;
 var CULOARE_REZERVOR = CULOARE_FRUNZA_NORMALA;
 var CULOARE_APA_REZERVOR = CULOARE_FRUNZA_PENETRATA;
 var CULOARE_APA_REZERVOR_CAPACITATE_DEPASITA = "#c88c51";
 var xApaRezervor = xRezervor;
-var yApaRezervor = yRezervor + inaltimeRezervor - nivelApaRezervor;
-var lungimeApaRezervor = lungimeRezervor;
+var yApaRezervor = yRezervor + INALTIME_REZERVOR - nivelApaRezervor;
+var lungimeApaRezervor = LUNGIME_REZERVOR;
 var capacitatea_a_fost_depasita = false;
 
 
@@ -144,14 +152,12 @@ var total_frunze_pierdute = 0;
 var total_frunze_penetrate = 0;
 var total_frunze_normale = 0;
 
-var CULOARE_TEXT_LEGENDA = "#002e4d";
-var CULOARE_TEXT_PROTECTII = "grey";
 
+var x_jeton_legenda = xRezervor + LUNGIME_REZERVOR + distantareOrizontalaRezervorLegenda;
+var y_jeton_legenda = yRezervor + jeton_model_raza;
 
-var x_jeton_legenda = xRezervor + lungimeRezervor + distantareRezervorLegenda;
-var y_jeton_legenda = yRezervor;
-var x_text_legenda = x_jeton_legenda + 25;
-var y_text_legenda = y_jeton_legenda + IDENTARE_TEXT_LEGENDA;
+var x_text_legenda = x_jeton_legenda + jeton_model_diametru;
+var y_text_legenda = y_jeton_legenda + IDENTARE_VERTICALA_TEXT_LEGENDA;
 
 
 //canvas
@@ -215,8 +221,8 @@ function startJoc(){
 var mySuprafataJoc = {
   canvas : document.createElement("canvas"),
   creare : function() {
-      this.canvas.width = canvas_width;
-      this.canvas.height = canvas_height;
+      this.canvas.width = CANVAS_WIDTH;
+      this.canvas.height = CANVAS_HEIGHT;
       this.context = this.canvas.getContext("2d");
       this.canvas.addEventListener("click", interactioneaza, false);
       //this.canvas.addEventListener("dblclick", doSomething, false);
@@ -635,15 +641,15 @@ function desenareRezervor(){
     //ctx.lineWidth = grosime_margine_jeton;
 
     //rezervor
-    ctx.fillRect(xRezervor, yRezervor, lungimeRezervor, inaltimeRezervor);
+    ctx.fillRect(xRezervor, yRezervor, LUNGIME_REZERVOR, INALTIME_REZERVOR);
 
     //apa rezervor
     if (total_frunze_penetrate <= MAXIM_FRUNZE * FACTOR_CAPACITATE_REZERVOR){
-        nivelApaRezervor = total_frunze_penetrate * inaltimeRezervor / (MAXIM_FRUNZE * FACTOR_CAPACITATE_REZERVOR);
+        nivelApaRezervor = total_frunze_penetrate * INALTIME_REZERVOR / (MAXIM_FRUNZE * FACTOR_CAPACITATE_REZERVOR);
         ctx.fillStyle = CULOARE_APA_REZERVOR;
     }
     else {
-        nivelApaRezervor = inaltimeRezervor;
+        nivelApaRezervor = INALTIME_REZERVOR;
         ctx.fillStyle = CULOARE_APA_REZERVOR_CAPACITATE_DEPASITA;
         if (capacitatea_a_fost_depasita == false){
             capacitatea_a_fost_depasita = true;
@@ -652,7 +658,7 @@ function desenareRezervor(){
         }
     }
     //calcul yApaRezervor
-    yApaRezervor = yRezervor + inaltimeRezervor - nivelApaRezervor;
+    yApaRezervor = yRezervor + INALTIME_REZERVOR - nivelApaRezervor;
     ctx.fillRect(xApaRezervor, yApaRezervor, lungimeApaRezervor, nivelApaRezervor);
 
 }
@@ -1039,14 +1045,20 @@ function actualizareParametriiVersiune(){
       //V1
       element_versiune.textContent = TEXT_VERSIUNEA_2;
       console.log("Versiune Selectata: " + TEXT_VERSIUNEA_1);
-      canvas_width = CANVAS_WIDTH_V1;
-      canvas_height = CANVAS_HEIGHT_V1;
+      CANVAS_WIDTH = CANVAS_WIDTH_V1;
+      CANVAS_HEIGHT = CANVAS_HEIGHT_V1;
   }
   else{
       //V2
       element_versiune.textContent = TEXT_VERSIUNEA_1;
       console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
-      canvas_width = CANVAS_WIDTH_V2;
-      canvas_height = CANVAS_HEIGHT_V2;
+      CANVAS_WIDTH = CANVAS_WIDTH_V2;
+      CANVAS_HEIGHT = CANVAS_HEIGHT_V2;
   }
+
+  //actualizare variabile dependente
+  y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
+  yRezervor = y_grup_legenda;
+  y_jeton_legenda = yRezervor + jeton_model_raza;
+  y_text_legenda = y_jeton_legenda + IDENTARE_VERTICALA_TEXT_LEGENDA;
 }
