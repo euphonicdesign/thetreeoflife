@@ -171,6 +171,14 @@ var TEXT_LEGENDA_FRUNZE_PIERDUTE = TEXT_LEGENDA_FRUNZE_PIERDUTE_EN;
 var TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_EN;
 var TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_EN;
 
+//VERSIUNE
+var VERSIUNEA_1 = 0;
+var VERSIUNEA_2 = 1;
+var VERSIUNEA_SELECTATA = VERSIUNEA_1;
+var TEXT_VERSIUNEA_1 = "V1";
+var TEXT_VERSIUNEA_2 = "V2";
+
+
 //captura apasare taste
 const input = document.querySelector('html');
 input.onkeydown = trimiteComenziJoc;
@@ -186,6 +194,7 @@ function startJoc(){
   setare_conditii_initiale();
   mySuprafataJoc.creare();
   setare_limba_preferata();
+  setare_versiune_preferata();
 }
 
 var mySuprafataJoc = {
@@ -905,6 +914,57 @@ function trimiteComenziJoc(e){
     //}
 }
 
+function schimbareVersiune(){
+  var element_versiune = document.getElementById("versiune");
+  //console.log(element_versiune.textContent);
+
+  //actualizare HTML V1 V2
+  if(element_versiune.textContent == TEXT_VERSIUNEA_1){
+      VERSIUNEA_SELECTATA = VERSIUNEA_1;
+      //TEXT_TITLU = TEXT_TITLU_EN;
+      //schimbare text in functie de versiunea selectata
+      element_versiune.textContent = TEXT_VERSIUNEA_2;
+      //actualizare parametrii versiune
+  }
+  else{
+      VERSIUNEA_SELECTATA = VERSIUNEA_2;
+      //TEXT_TITLU = TEXT_TITLU_RO;
+      //schimbare text in functie de versiunea selectata
+      element_versiune.textContent = TEXT_VERSIUNEA_1;
+      //actualizare parametrii versiune
+  }
+
+  //actualizare Parametrii Versiune
+  actualizareParametriiVersiune();
+
+  //salvare preferinta
+  localStorage.setItem('versiune', VERSIUNEA_SELECTATA);
+}
+
+function actualizareParametriiVersiune(){
+
+  //actualizare HTML V1 V2
+  var element_versiune = document.getElementById("versiune");
+
+  if(VERSIUNEA_SELECTATA == VERSIUNEA_1){
+      element_versiune.textContent = TEXT_VERSIUNEA_2;
+      console.log("Versiune Selectata: " + TEXT_VERSIUNEA_1);
+  }
+  else{
+      element_versiune.textContent = TEXT_VERSIUNEA_1;
+      console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
+  }
+}
+
+function setare_versiune_preferata() {
+  if(!localStorage.getItem('versiune')) {
+      localStorage.setItem('versiune', VERSIUNEA_SELECTATA);
+  } else {
+    VERSIUNEA_SELECTATA = localStorage.getItem('versiune');
+    actualizareParametriiVersiune();
+  }
+}
+
 function selectieLimbaEngleza(){
     LIMBA_SELECTATA = LIMBA_ENGLEZA;
     actualizareLimba();
@@ -931,6 +991,8 @@ function setare_limba_preferata() {
     actualizareLimba();
   }
 }
+
+
 
 function actualizareLimba(){
   //console.log("LIMBA_SELECTATA: " + LIMBA_SELECTATA)
