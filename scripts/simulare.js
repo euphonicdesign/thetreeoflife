@@ -5,6 +5,9 @@ var VERSIUNEA_SELECTATA = VERSIUNEA_1;
 var TEXT_VERSIUNEA_1 = "V1";
 var TEXT_VERSIUNEA_2 = "V2";
 
+//Parametrii V1
+var CANVAS_WIDTH_V1 = 700;
+
 //canvas
 var canvas_w = 1200;
 var canvas_h = 700;
