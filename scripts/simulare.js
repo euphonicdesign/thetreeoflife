@@ -1057,6 +1057,7 @@ function actualizareParametriiVersiune(){
   }
 
   //actualizare variabile dependente
+  y_linie_mijloc = CANVAS_HEIGHT / 2 - 100 + 25/2;
   y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
   yRezervor = y_grup_legenda;
   y_jeton_legenda = yRezervor + jeton_model_raza;
