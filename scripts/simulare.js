@@ -938,7 +938,7 @@ function schimbareVersiune(){
   actualizareParametriiVersiune();
 
   //salvare preferinta
-  localStorage.setItem('versiune', VERSIUNEA_SELECTATA);
+  localStorage.setItem('version', VERSIUNEA_SELECTATA);
 }
 
 function actualizareParametriiVersiune(){
@@ -957,10 +957,10 @@ function actualizareParametriiVersiune(){
 }
 
 function setare_versiune_preferata() {
-  if(!localStorage.getItem('versiune')) {
-      localStorage.setItem('versiune', VERSIUNEA_SELECTATA);
+  if(!localStorage.getItem('version')) {
+      localStorage.setItem('version', VERSIUNEA_SELECTATA);
   } else {
-    VERSIUNEA_SELECTATA = localStorage.getItem('versiune');
+    VERSIUNEA_SELECTATA = localStorage.getItem('version');
     actualizareParametriiVersiune();
   }
 }
