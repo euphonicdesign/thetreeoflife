@@ -107,13 +107,13 @@ var jeton_model_raza = jeton_model_diametru / 2;
 
 var CULOARE_JETON = "#d9d9d9";
 var CULOARE_MARGINE_JETON = "#336699";
-var me1_x = 10 + jeton_model_raza;
-var me1_y = 10 + jeton_model_diametru;
+var jeton_model_x = 10 + jeton_model_raza;
+var jeton_model_y = 10 + jeton_model_diametru;
 var me_tip = TIP_DREPTUNGHI;
 
 var me2_culoare = "orange";
-var me2_x = me1_x;
-var me2_y = me1_y + 100;
+var me2_x = jeton_model_x;
+var me2_y = jeton_model_y + 100;
 
 //GRUP_LEGENDA (Rezervor + Legenda)
 var xGrupLegenda = 15;
@@ -821,7 +821,7 @@ function generare_retea_jetoane() {
         y_start = y_linie_mijloc - distanta;
 
         for (let j = 0; j < numar_jetoane_per_nivel; j++) {
-            x_jeton = me1_x + i * jeton_model_diametru * distantare_x_jetoane;
+            x_jeton = jeton_model_x + i * jeton_model_diametru * distantare_x_jetoane;
             y_jeton = y_start + j * jeton_model_diametru * distantare_y_jetoane;
             tip_jeton = TIP_CERC;
             myJeton = new jeton(jeton_model_raza, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
