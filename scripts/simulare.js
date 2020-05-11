@@ -1,4 +1,9 @@
-var myJeton1, myJeton2;
+//VERSIUNE
+var VERSIUNEA_1 = 0;
+var VERSIUNEA_2 = 1;
+var VERSIUNEA_SELECTATA = VERSIUNEA_1;
+var TEXT_VERSIUNEA_1 = "V1";
+var TEXT_VERSIUNEA_2 = "V2";
 
 //canvas
 var canvas_w = 1200;
@@ -89,10 +94,10 @@ var TUB_CULOARE_FLUX = "#66c2ff";
 var TIP_DREPTUNGHI = "dreptunghi";
 var TIP_CERC = "cerc";
 
-//matrice element
+//matrice jetoane
 var me_w = 25;
 var me_h = 25;
-var RAZA_ELEMENT = me_w / 2;
+var RAZA_JETON = me_w / 2;
 
 var CULOARE_JETON = "#d9d9d9";
 var CULOARE_MARGINE_JETON = "#336699";
@@ -137,7 +142,7 @@ var y_jeton_legenda = y_text_legenda - 7;
 var canvasPositionX = 285;
 var canvasPositionY = 176;
 
-var MARJA_POZITIONARE_MOUSE = 0.2 * RAZA_ELEMENT;
+var MARJA_POZITIONARE_MOUSE = 0.2 * RAZA_JETON;
 
 //LIMBA
 var LIMBA_ENGLEZA = 0;
@@ -171,12 +176,6 @@ var TEXT_LEGENDA_FRUNZE_PIERDUTE = TEXT_LEGENDA_FRUNZE_PIERDUTE_EN;
 var TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_EN;
 var TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_EN;
 
-//VERSIUNE
-var VERSIUNEA_1 = 0;
-var VERSIUNEA_2 = 1;
-var VERSIUNEA_SELECTATA = VERSIUNEA_1;
-var TEXT_VERSIUNEA_1 = "V1";
-var TEXT_VERSIUNEA_2 = "V2";
 
 
 //captura apasare taste
@@ -219,7 +218,7 @@ var mySuprafataJoc = {
   }
 }
 
-function element(raza, culoare, x, y, tip) {
+function jeton(raza, culoare, x, y, tip) {
     this.raza = raza;
     //this.w = w;
     //this.h = h;
@@ -567,8 +566,8 @@ function interactioneaza(e) {
         distanta_click_x = mouseX - vector_jetoane[i].x;
         distanta_click_y = mouseY - vector_jetoane[i].y;
         distanta_click = Math.pow(distanta_click_x,2) + Math.pow(distanta_click_y,2);
-        distanta_arie_element = Math.pow(RAZA_ELEMENT,2);
-        if(distanta_click < distanta_arie_element){
+        distanta_arie_jeton = Math.pow(RAZA_JETON,2);
+        if(distanta_click < distanta_arie_jeton){
             if (vector_jetoane[i].metoda_preventie == METODA_PREVENTIE_AFARA){
                 vector_jetoane[i].metoda_preventie = METODA_PREVENTIE_MASCA;
             }
@@ -810,7 +809,7 @@ function generare_retea_jetoane() {
             y_jeton = y_start + j * me_h * distantare_y_jetoane;
             tip_jeton = TIP_CERC;
             raza = me_w / 2;
-            myJeton = new element(raza, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+            myJeton = new jeton(raza, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
             vector_jetoane.push(myJeton);
         }
     }
@@ -828,16 +827,16 @@ function generare_retea_tuburi() {
         // i = nr_strat
         nr_faza = 0; // de la 1 la 3 pentru adancime retea = 3
         for (let i = 0; i < adancime_retea; i++) {
-            adancimefaza = i % nr_straturi_per_faza; // de la 0 la 3 - adancime 0 are 1 element, adancime 2 are 2 elemente
+            adancimefaza = i % nr_straturi_per_faza; // de la 0 la 3 - adancime 0 are 1 jetoane, adancime 2 are 2 jetoane
 
             numar_jetoane_per_strat = Math.pow(2,adancimefaza);
             //separare faze
             if (adancimefaza === 0){
                 //nr faza
                 nr_faza += 1;
-                nr_elemente_faza = 0;
+                nr_jetoane_faza = 0;
                 for(let k = 0; k < nr_straturi_per_faza; k++)
-                  nr_elemente_faza += Math.pow(2,k);
+                  nr_jetoane_faza += Math.pow(2,k);
             }
 
             for (let j = 0; j < numar_jetoane_per_strat; j++) {
@@ -845,19 +844,19 @@ function generare_retea_tuburi() {
 
                 //exceptand primul jeton din fiecare faza
                 if (numar_jetoane_per_strat>1 && adancimefaza >0)
-                    index_jeton_intrare = Math.floor((index_jeton - 1 + nr_elemente_faza * (nr_faza - 1)) /2);
+                    index_jeton_intrare = Math.floor((index_jeton - 1 + nr_jetoane_faza * (nr_faza - 1)) /2);
                 else{
                     //primul jeton de la inceputul fiecarei faze, incepand cu a doua faza
                     if (nr_faza == 2){
-                        //tub la elementul din mijlocul ultimului strat din faza precedenta
+                        //tub la jetonul din mijlocul ultimului strat din faza precedenta
                         index_jeton_intrare = Math.floor((index_jeton - 1) /2) + nr_straturi_per_faza;
                         //tub la ultimul jeton din faza precedenta
                         //index_jeton_intrare = index_jeton-1;
                     }
                     if (nr_faza >= 3){
-                        //tub la elementul din mijlocul ultimului strat din faza precedenta
+                        //tub la jetonul din mijlocul ultimului strat din faza precedenta
                         //index_jeton_intrare = Math.floor((index_jeton - 1) /2);
-                        index_jeton_intrare = Math.floor((index_jeton + nr_elemente_faza - 1) /2) + nr_straturi_per_faza;
+                        index_jeton_intrare = Math.floor((index_jeton + nr_jetoane_faza - 1) /2) + nr_straturi_per_faza;
                         //tub la ultimul jeton din faza precedenta
                         //index_jeton_intrare = index_jeton-1;
                     }
@@ -934,15 +933,17 @@ function schimbareVersiune(){
       //actualizare parametrii versiune
   }
 
-  //actualizare Parametrii Versiune
-  actualizareParametriiVersiune();
-
   //salvare preferinta
   localStorage.setItem('version', VERSIUNEA_SELECTATA);
+
+  restart();
+
+  //actualizare Parametrii Versiune
+  //actualizareParametriiVersiune();
+
 }
 
 function actualizareParametriiVersiune(){
-
   //actualizare HTML V1 V2
   var element_versiune = document.getElementById("versiune");
 
