@@ -1,8 +1,8 @@
 var myJeton1, myJeton2;
 
 //canvas
-var canvas_w = 798;
-var canvas_h = 650;
+var canvas_w = 1200;
+var canvas_h = 700;
 var y_linie_mijloc = canvas_h / 2 - 100 + 25/2;
 
 //temporizare

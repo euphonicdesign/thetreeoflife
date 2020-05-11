@@ -31,10 +31,13 @@ p, li {
 
 html {
   background-color: #00111a;
+
 }
 
 body {
-  width: 800px;
+  /*width:800px;*/
+  width: fit-content;
+  /*display:inline-block;min-width:100%;*/
   margin: 50px auto;
   background-color: #FFFFFF;
   padding: 10px 20px 20px 20px;
