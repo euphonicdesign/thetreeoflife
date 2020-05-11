@@ -5,13 +5,16 @@ var VERSIUNEA_SELECTATA = VERSIUNEA_1;
 var TEXT_VERSIUNEA_1 = "V1";
 var TEXT_VERSIUNEA_2 = "V2";
 
-//Parametrii V1
-var CANVAS_WIDTH_V1 = 700;
+//Parametrii
+var CANVAS_WIDTH_V1 = 800;
+var CANVAS_HEIGHT_V1 = 650;
+var CANVAS_WIDTH_V2 = 1200;
+var CANVAS_HEIGHT_V2 = 700;
 
 //canvas
-var canvas_w = 1200;
-var canvas_h = 700;
-var y_linie_mijloc = canvas_h / 2 - 100 + 25/2;
+var canvas_width = CANVAS_WIDTH_V1;
+var canvas_height = CANVAS_HEIGHT_V1;
+var y_linie_mijloc = canvas_height / 2 - 100 + 25/2;
 
 //temporizare
 var accelerare_timp = 5;
@@ -191,19 +194,19 @@ function restart(){
 }
 
 function startJoc(){
+  setare_limba_preferata();
+  setare_versiune_preferata();
   generare_retea_jetoane();
   generare_retea_tuburi();
   setare_conditii_initiale();
   mySuprafataJoc.creare();
-  setare_limba_preferata();
-  setare_versiune_preferata();
 }
 
 var mySuprafataJoc = {
   canvas : document.createElement("canvas"),
   creare : function() {
-      this.canvas.width = canvas_w;
-      this.canvas.height = canvas_h;
+      this.canvas.width = canvas_width;
+      this.canvas.height = canvas_height;
       this.context = this.canvas.getContext("2d");
       this.canvas.addEventListener("click", interactioneaza, false);
       //this.canvas.addEventListener("dblclick", doSomething, false);
@@ -946,27 +949,15 @@ function schimbareVersiune(){
 
 }
 
-function actualizareParametriiVersiune(){
-  //actualizare HTML V1 V2
-  var element_versiune = document.getElementById("versiune");
 
-  if(VERSIUNEA_SELECTATA == VERSIUNEA_1){
-      element_versiune.textContent = TEXT_VERSIUNEA_2;
-      console.log("Versiune Selectata: " + TEXT_VERSIUNEA_1);
-  }
-  else{
-      element_versiune.textContent = TEXT_VERSIUNEA_1;
-      console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
-  }
-}
 
 function setare_versiune_preferata() {
   if(!localStorage.getItem('version')) {
       localStorage.setItem('version', VERSIUNEA_SELECTATA);
   } else {
     VERSIUNEA_SELECTATA = localStorage.getItem('version');
-    actualizareParametriiVersiune();
   }
+  actualizareParametriiVersiune();
 }
 
 function selectieLimbaEngleza(){
@@ -1028,5 +1019,25 @@ function actualizareLimba(){
 
     titlu.textContent = TEXT_TITLU;
     link_pauza.textContent = "Pauza";
+  }
+}
+
+function actualizareParametriiVersiune(){
+  //actualizare HTML V1 V2
+  var element_versiune = document.getElementById("versiune");
+
+  if(VERSIUNEA_SELECTATA == VERSIUNEA_1){
+      //V1
+      element_versiune.textContent = TEXT_VERSIUNEA_2;
+      console.log("Versiune Selectata: " + TEXT_VERSIUNEA_1);
+      canvas_width = CANVAS_WIDTH_V1;
+      canvas_height = CANVAS_HEIGHT_V1;
+  }
+  else{
+      //V2
+      element_versiune.textContent = TEXT_VERSIUNEA_1;
+      console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
+      canvas_width = CANVAS_WIDTH_V2;
+      canvas_height = CANVAS_HEIGHT_V2;
   }
 }
