@@ -1,4 +1,4 @@
-//VERSIUNE
+jeton_model_raza//VERSIUNE
 var VERSIUNEA_1 = 0;
 var VERSIUNEA_2 = 1;
 var VERSIUNEA_SELECTATA = VERSIUNEA_1;
@@ -101,14 +101,14 @@ var TIP_DREPTUNGHI = "dreptunghi";
 var TIP_CERC = "cerc";
 
 //matrice jetoane
-var jeton_model_width = 25;
-var jeton_model_height = 25;
-var jeton_model_raza = jeton_model_width / 2;
+var jeton_model_diametru = 25;
+var jeton_model_raza = jeton_model_diametru / 2;
+
 
 var CULOARE_JETON = "#d9d9d9";
 var CULOARE_MARGINE_JETON = "#336699";
-var me1_x = 10 + jeton_model_width/2;
-var me1_y = 10 + jeton_model_height;
+var me1_x = 10 + jeton_model_raza;
+var me1_y = 10 + jeton_model_diametru;
 var me_tip = TIP_DREPTUNGHI;
 
 var me2_culoare = "orange";
@@ -671,8 +671,8 @@ function desenareContor(){
     ctx.lineWidth = grosime_margine_jeton;
     ctx.beginPath();
 
-    //(jeton_model_width, jeton_model_height, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda, jeton_model_width/2, 0, Math.PI*2, false);
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda, jeton_model_raza, 0, Math.PI*2, false);
     ctx.closePath();
     ctx.fill();
     //ctx.stroke();
@@ -684,8 +684,8 @@ function desenareContor(){
     ctx.lineWidth = grosime_margine_jeton;
     ctx.beginPath();
 
-    //(jeton_model_width, jeton_model_height, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda + 30, jeton_model_width/2, 0, Math.PI*2, false);
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 30, jeton_model_raza, 0, Math.PI*2, false);
     ctx.closePath();
     ctx.fill();
     //ctx.stroke();
@@ -697,8 +697,8 @@ function desenareContor(){
     ctx.lineWidth = grosime_margine_jeton;
     ctx.beginPath();
 
-    //(jeton_model_width, jeton_model_height, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda + 60, jeton_model_width/2, 0, Math.PI*2, false);
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 60, jeton_model_raza, 0, Math.PI*2, false);
     ctx.closePath();
     ctx.fill();
     //ctx.stroke();
@@ -710,8 +710,8 @@ function desenareContor(){
     ctx.lineWidth = grosime_margine_jeton;
     ctx.beginPath();
 
-    //(jeton_model_width, jeton_model_height, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda + 90, jeton_model_width/2, 0, Math.PI*2, false);
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 90, jeton_model_raza, 0, Math.PI*2, false);
     ctx.closePath();
     ctx.fill();
     //ctx.stroke();
@@ -723,8 +723,8 @@ function desenareContor(){
     ctx.lineWidth = grosime_margine_jeton;
     ctx.beginPath();
 
-    //(jeton_model_width, jeton_model_height, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda + 120, jeton_model_width/2, 0, Math.PI*2, false);
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 120, jeton_model_raza, 0, Math.PI*2, false);
     ctx.closePath();
     ctx.fill();
     //ctx.stroke();
@@ -736,8 +736,8 @@ function desenareContor(){
     ctx.lineWidth = grosime_margine_jeton;
     ctx.beginPath();
 
-    //(jeton_model_width, jeton_model_height, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda + 150, jeton_model_width/2, 0, Math.PI*2, false);
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 150, jeton_model_raza, 0, Math.PI*2, false);
     ctx.closePath();
     ctx.fill();
     //ctx.stroke();
@@ -801,14 +801,14 @@ function pauzaJoc() {
 
 function generare_retea_jetoane() {
     y_start = y_linie_mijloc;
-    distanta = jeton_model_height/2 * distantare_y_jetoane;
+    distanta = jeton_model_raza * distantare_y_jetoane;
     for (let i = 0; i < adancime_retea; i++) {
         adancimefaza = i % 4;
 
         numar_jetoane_per_nivel = Math.pow(2,adancimefaza);
         //separare faze
         if (adancimefaza === 0){
-            distanta = jeton_model_height/2 * distantare_y_jetoane;
+            distanta = jeton_model_raza * distantare_y_jetoane;
             //nr faza
             nr_faza = Math.round(i/4) + 1;
             //console.log("numar faza " + nr_faza);
@@ -821,11 +821,10 @@ function generare_retea_jetoane() {
         y_start = y_linie_mijloc - distanta;
 
         for (let j = 0; j < numar_jetoane_per_nivel; j++) {
-            x_jeton = me1_x + i * jeton_model_width * distantare_x_jetoane;
-            y_jeton = y_start + j * jeton_model_height * distantare_y_jetoane;
+            x_jeton = me1_x + i * jeton_model_diametru * distantare_x_jetoane;
+            y_jeton = y_start + j * jeton_model_diametru * distantare_y_jetoane;
             tip_jeton = TIP_CERC;
-            raza = jeton_model_width / 2;
-            myJeton = new jeton(raza, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+            myJeton = new jeton(jeton_model_raza, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
             vector_jetoane.push(myJeton);
         }
     }
