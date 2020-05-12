@@ -214,9 +214,9 @@ function startJoc(){
   setare_versiune_preferata();
 
   if(VERSIUNEA_SELECTATA == VERSIUNEA_1){
-      generare_retea_jetoane();
-      generare_retea_tuburi();
-      setare_conditii_initiale();
+      generare_retea_jetoane_v1();
+      generare_retea_tuburi_v1();
+      setare_conditii_initiale_v1();
   }else{
       console.log("versiunea 2 nu are nimic de afisat");
   }
@@ -815,7 +815,7 @@ function pauzaJoc() {
     */
 }
 
-function generare_retea_jetoane() {
+function generare_retea_jetoane_v1() {
     y_start = y_linie_mijloc;
     distanta = jeton_model_raza * distantare_y_jetoane;
     for (let i = 0; i < adancime_retea; i++) {
@@ -846,7 +846,7 @@ function generare_retea_jetoane() {
     }
 }
 
-function generare_retea_tuburi() {
+function generare_retea_tuburi_v1() {
     if(vector_jetoane.length > 1){
         /*
         jeton_intrare = vector_jetoane[0];
@@ -908,7 +908,7 @@ function generare_retea_tuburi() {
 
 }
 
-function setare_conditii_initiale() {
+function setare_conditii_initiale_v1() {
     //setare conditii initiale
     if(vector_jetoane.length > 0){
       vector_jetoane[0].staredetransmitere = true;
