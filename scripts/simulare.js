@@ -22,8 +22,7 @@ var IDENTARE_VERTICALA_GRUP_LEGENDA = 20;
 
 //var x_grup_legenda = 15;
 //var y_grup_legenda = 460;
-var x_grup_legenda = 850;
-//var x_grup_legenda = 850;
+var x_grup_legenda = 15;
 //var y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
 var y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
 
@@ -254,13 +253,13 @@ function generare_retea_jetoane_v2() {
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
 
-    myTufa = new tufaJetoane(770, (y_linie_mijloc+100) - 150 , 4);
+    myTufa = new tufaJetoane(780, (y_linie_mijloc+100) - 150 , 4);
     myTufa.initializare();
     myTufa.expandare_in_linie();
     //myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
 
-    myTufa = new tufaJetoane(1000, (y_linie_mijloc +100) - 150, 4);
+    myTufa = new tufaJetoane(1010, (y_linie_mijloc +100) - 150, 4);
     myTufa.initializare();
     //myTufa.expandare_in_linie();
     myTufa.expandare_in_v();
@@ -1168,7 +1167,7 @@ function actualizareParametriiVersiune(){
       CANVAS_WIDTH = CANVAS_WIDTH_V1;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V1;
       y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
-      x_grup_legenda = 850;
+      x_grup_legenda = 15;
   }
   else{
       //V2
@@ -1176,14 +1175,18 @@ function actualizareParametriiVersiune(){
       console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
       CANVAS_WIDTH = CANVAS_WIDTH_V2;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V2;
-      y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
+      y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA - 10;
       x_grup_legenda = 850;
   }
 
   //actualizare variabile dependente
   y_linie_mijloc = CANVAS_HEIGHT / 2 - 100 + 25/2;
-
+  xRezervor = x_grup_legenda;
   yRezervor = y_grup_legenda;
+  xApaRezervor = xRezervor;
   y_jeton_legenda = yRezervor + jeton_model_raza;
   y_text_legenda = y_jeton_legenda + IDENTARE_VERTICALA_TEXT_LEGENDA;
+
+  x_jeton_legenda = xRezervor + LUNGIME_REZERVOR + distantareOrizontalaRezervorLegenda;
+  x_text_legenda = x_jeton_legenda + jeton_model_diametru;
 }
