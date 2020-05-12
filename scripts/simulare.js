@@ -229,48 +229,53 @@ function startJoc(){
 }
 
 function generare_retea_jetoane_v2() {
-    myTufa = new tufaJetoane(35, y_linie_mijloc+100, 5, TIP_EXPANDARE_IN_V);
-    myTufa.initializare();
-    myTufa.penetrare_jeton_start();
-    //myTufa.expandare_in_linie();
-    /*
-    myTufa.expandare_in_v();
-    myTufa.alimentare_vector_jetoane_global();
-    myTufa.penetrare_jeton_start();
-    myTufa.conectare_tuburi_in_v();
-    myTufa.alimentare_vector_tuburi_global();*/
+    //generare tufe
+    tufa1 = new tufaJetoane(35, y_linie_mijloc+100, 5, TIP_EXPANDARE_IN_V);
+    tufa1.initializare();
 
-    myTufa = new tufaJetoane(300, (y_linie_mijloc+100) - 170 , 4, TIP_EXPANDARE_IN_V);
-    myTufa.initializare();
-    //myTufa.expandare_in_linie();
-  //  myTufa.expandare_in_v();
-  //  myTufa.alimentare_vector_jetoane_global();
+    tufa2 = new tufaJetoane(300, (y_linie_mijloc+100) - 170 , 4, TIP_EXPANDARE_IN_V);
+    tufa2.initializare();
 
+    tufa3 = new tufaJetoane(300, (y_linie_mijloc+100) + 170, 4, TIP_EXPANDARE_IN_V);
+    tufa3.initializare();
 
-    myTufa = new tufaJetoane(300, (y_linie_mijloc+100) + 170, 4, TIP_EXPANDARE_IN_V);
-    myTufa.initializare();
-    //myTufa.expandare_in_linie();
-  //  myTufa.expandare_in_v();
-    //myTufa.alimentare_vector_jetoane_global();
+    tufa4 = new tufaJetoane(35 + 300 + 200, y_linie_mijloc+100, 5, TIP_EXPANDARE_IN_V);
+    tufa4.initializare();
 
+    tufa4_prim = new tufaJetoane(270, (y_linie_mijloc+100) , 3, TIP_EXPANDARE_IN_V);
+    tufa4_prim.initializare();
 
-    myTufa = new tufaJetoane(35 + 300 + 200, y_linie_mijloc+100, 5, TIP_EXPANDARE_IN_V);
-    myTufa.initializare();
-    //myTufa.expandare_in_linie();
-    //myTufa.expandare_in_v();
-    //myTufa.alimentare_vector_jetoane_global();
+    tufa5 = new tufaJetoane(490, (y_linie_mijloc+100) - 170 , 3, TIP_EXPANDARE_IN_V);
+    tufa5.initializare();
+
+    tufa6 = new tufaJetoane(490, (y_linie_mijloc+100) + 170 , 3, TIP_EXPANDARE_IN_V);
+    tufa6.initializare();
+
+    tufa7 = new tufaJetoane(1010, (y_linie_mijloc +100) - 150, 4, TIP_EXPANDARE_IN_V);
+    tufa7.initializare();
 
 
 
-    myTufa = new tufaJetoane(1010, (y_linie_mijloc +100) - 150, 4, TIP_EXPANDARE_IN_V);
-    myTufa.initializare();
-    //myTufa.expandare_in_linie();
-    //myTufa.expandare_in_v();
-    //myTufa.alimentare_vector_jetoane_global();
+    //conectare tuburi individuale
+    myTub = new tub(tufa1.vector_jetoane[19], tufa2.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
 
-    myTufa = new tufaJetoane(740, (y_linie_mijloc+100) - 150 , 5, TIP_EXPANDARE_IN_LINIE);
-    myTufa.initializare();
-    myTufa.penetrare_jeton_start();
+    myTub = new tub(tufa1.vector_jetoane[26], tufa3.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    myTub = new tub(tufa2.vector_jetoane[14], tufa4.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    //setare conditii initializale
+    tufa1.penetrare_jeton_start();
+
+    //asignare metoda preventie
+    for(let i=1; i<vector_jetoane.length; i++){
+        nr_stari = 3;
+        metoda_preventie_random = Math.floor(Math.random() * Math.floor(nr_stari));
+        //console.log("i = " + i + " stare: " + metoda_preventie_random);
+        vector_jetoane[i].metoda_preventie = metoda_preventie_random;
+    }
 
 }
 
@@ -1251,7 +1256,8 @@ function actualizareParametriiVersiune(){
       console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
       CANVAS_WIDTH = CANVAS_WIDTH_V2;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V2;
-      y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA - 10;
+      //y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA - 10;
+      y_grup_legenda = 50;
       x_grup_legenda = 850;
   }
 
