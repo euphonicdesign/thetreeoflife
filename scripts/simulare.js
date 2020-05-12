@@ -225,6 +225,8 @@ var mySuprafataJoc = {
       this.canvas.height = CANVAS_HEIGHT;
       this.context = this.canvas.getContext("2d");
       this.canvas.addEventListener("click", interactioneaza, false);
+      //dezactiveaza dublu click - selectie text html
+      this.canvas.addEventListener("mousedown", function(e){ e.preventDefault(); }, false);
       //this.canvas.addEventListener("dblclick", doSomething, false);
 
       document.body.insertBefore(this.canvas, document.body.childNodes[3]);
