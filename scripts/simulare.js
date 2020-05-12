@@ -212,9 +212,17 @@ function restart(){
 function startJoc(){
   setare_limba_preferata();
   setare_versiune_preferata();
-  generare_retea_jetoane();
-  generare_retea_tuburi();
-  setare_conditii_initiale();
+
+  if(VERSIUNEA_SELECTATA == VERSIUNEA_1){
+      generare_retea_jetoane();
+      generare_retea_tuburi();
+      setare_conditii_initiale();
+  }else{
+      console.log("versiunea 2 nu are nimic de afisat");
+  }
+
+
+
   mySuprafataJoc.creare();
 }
 
