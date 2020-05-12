@@ -228,7 +228,7 @@ function startJoc(){
 }
 
 function generare_retea_jetoane_v2() {
-    myTufa = new tufaJetoane(jeton_model_x, y_linie_mijloc, 4);
+    myTufa = new tufaJetoane(300, y_linie_mijloc, 4);
     myTufa.initializare();
     //myTufa.expandare_in_line();
     myTufa.expandare_in_v();
@@ -257,7 +257,9 @@ function tufaJetoane(x_start, y_start, nr_straturi){
 
     this.expandare_in_v = function() {
         identare_verticala = 0;
-        factor_distantare_verticala = 2;
+        factor_distantare_verticala = 1.5;
+        factor_distantare_orizontala = 1.8;
+
         for(let i=0; i<this.nr_straturi; i++){
             var nr_jetoane_per_strat = Math.pow(2,i)
             identare_verticala += (Math.floor(nr_jetoane_per_strat/2)* jeton_model_diametru * factor_distantare_verticala)/2;
@@ -273,7 +275,7 @@ function tufaJetoane(x_start, y_start, nr_straturi){
                 //pentru straturile 1,2,3 - jetoanele vor fi distantate in mod corespunzator
                 else{
                   //nr_jetoane = Math.pow(2,)
-                  distantare_orizontala = i * 2 * jeton_model_diametru;
+                  distantare_orizontala = i * factor_distantare_orizontala * jeton_model_diametru;
                   distantare_verticala = j * factor_distantare_verticala * jeton_model_diametru;
                   y_jeton = this.y_start - identare_verticala + distantare_verticala;
                   myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start + distantare_orizontala, y_jeton, this.tip_jeton);
