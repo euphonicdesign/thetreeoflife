@@ -233,6 +233,7 @@ function generare_retea_jetoane_v2() {
     myTufa.alimentare_vector_jetoane_global();
     myTufa.penetrare_jeton_start();
     myTufa.conectare_tuburi_in_v();
+    myTufa.alimentare_vector_tuburi_global();
 
     myTufa = new tufaJetoane(300, (y_linie_mijloc+100) - 170 , 4);
     //myTufa.expandare_in_linie();
@@ -348,13 +349,25 @@ function tufaJetoane(x_start, y_start, nr_straturi){
             //cate 2 jetoane din stratul curent de sus in jos
 
             for(let k=jeton_varf_strat_precedent; k < jeton_varf_strat; k++){
-                jeton_intrare = k;
-                jeton_iesire_1 = 2*k;
-                jeton_iesire_2 = 2*k + 1;
+                //indexul articial porneste de la 1 pentru fiecare jeton
+                index_jeton_intrare = k;
+                index_jeton_iesire_1 = 2*k;
+                index_jeton_iesire_2 = 2*k + 1;
 
-                //console.log("jeton intrare: " + k)
-                //console.log("jeton iesire 1:" + jeton_iesire_1);
-                //console.log("jeton iesire 2:" + jeton_iesire_2);
+                console.log("jeton intrare: " + k)
+                console.log("jeton iesire 1:" + index_jeton_iesire_1);
+                console.log("jeton iesire 2:" + index_jeton_iesire_2);
+
+                //ajustare index artificial pentru a incepe de la 0
+                jeton_intrare = this.vector_jetoane[index_jeton_intrare - 1];
+                jeton_iesire_1 = this.vector_jetoane[index_jeton_iesire_1 - 1];
+                jeton_iesire_2 = this.vector_jetoane[index_jeton_iesire_2 - 1];
+                myTub = new tub(jeton_intrare, jeton_iesire_1, TUB_CULOARE_GOL, TUB_NORMAL);
+                this.vector_tuburi.push(myTub);
+                myTub = new tub(jeton_intrare, jeton_iesire_2, TUB_CULOARE_GOL, TUB_NORMAL);
+                this.vector_tuburi.push(myTub);
+                this.index_ultimul_tub_adaugat += 2;
+
             }
           }
         }
