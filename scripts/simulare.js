@@ -285,6 +285,10 @@ function tufaJetoane(x_start, y_start, nr_straturi){
         }
     }
 
+    this.conectare_tuburi_in_linie = function(){
+      
+    }
+
     this.expandare_in_v = function() {
         identare_verticala = 0;
 
@@ -311,13 +315,7 @@ function tufaJetoane(x_start, y_start, nr_straturi){
         }
     }
 
-    this.expandare_in_line = function() {
-        for(let i=1; i<=this.nr_straturi; i++){
-            distantare_orizontala = i * 2 * jeton_model_diametru;
-            myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start + distantare_orizontala, this.y_start, this.tip_jeton);
-            this.vector_jetoane.push(myJeton);
-        }
-    }
+
 
     this.penetrare_jeton_start = function(){
         this.vector_jetoane[0].staredetransmitere = true;
