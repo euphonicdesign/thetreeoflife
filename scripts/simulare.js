@@ -2,8 +2,8 @@ jeton_model_raza//VERSIUNE
 var VERSIUNEA_1 = 0;
 var VERSIUNEA_2 = 1;
 var VERSIUNEA_SELECTATA = VERSIUNEA_1;
-var TEXT_VERSIUNEA_1 = "V1";
-var TEXT_VERSIUNEA_2 = "V2";
+var TEXT_VERSIUNEA_1 = "v1";
+var TEXT_VERSIUNEA_2 = "v2";
 
 //Parametrii
 var CANVAS_WIDTH_V1 = 800;
@@ -230,37 +230,34 @@ function startJoc(){
 
 function generare_retea_jetoane_v2() {
     myTufa = new tufaJetoane(35, y_linie_mijloc+100, 5);
-    myTufa.initializare();
     //myTufa.expandare_in_linie();
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
+    myTufa.penetrare_jeton_start();
 
     myTufa = new tufaJetoane(300, (y_linie_mijloc+100) - 170 , 4);
-    myTufa.initializare();
     //myTufa.expandare_in_linie();
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
+
 
     myTufa = new tufaJetoane(300, (y_linie_mijloc+100) + 170, 4);
-    myTufa.initializare();
     //myTufa.expandare_in_linie();
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
 
+
     myTufa = new tufaJetoane(35 + 300 + 200, y_linie_mijloc+100, 5);
-    myTufa.initializare();
     //myTufa.expandare_in_linie();
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
 
     myTufa = new tufaJetoane(780, (y_linie_mijloc+100) - 150 , 4);
-    myTufa.initializare();
     myTufa.expandare_in_linie();
     //myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
 
     myTufa = new tufaJetoane(1010, (y_linie_mijloc +100) - 150, 4);
-    myTufa.initializare();
     //myTufa.expandare_in_linie();
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
@@ -323,9 +320,9 @@ function tufaJetoane(x_start, y_start, nr_straturi){
     }
 
     this.penetrare_jeton_start = function(){
-        vector_jetoane[0].staredetransmitere = true;
-        vector_jetoane[0].penetrat = true;
-        vector_jetoane[0].stare_frunza = FRUNZA_PENETRATA;
+        this.vector_jetoane[0].staredetransmitere = true;
+        this.vector_jetoane[0].penetrat = true;
+        this.vector_jetoane[0].stare_frunza = FRUNZA_PENETRATA;
     }
 
     this.alimentare_vector_jetoane_global = function() {
