@@ -223,8 +223,6 @@ function startJoc(){
       generare_retea_jetoane_v2();
   }
 
-
-
   mySuprafataJoc.creare();
 }
 
@@ -234,6 +232,7 @@ function generare_retea_jetoane_v2() {
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
     myTufa.penetrare_jeton_start();
+    myTufa.conectare_tuburi_in_v();
 
     myTufa = new tufaJetoane(300, (y_linie_mijloc+100) - 170 , 4);
     //myTufa.expandare_in_linie();
@@ -259,7 +258,7 @@ function generare_retea_jetoane_v2() {
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
 
-    myTufa = new tufaJetoane(760, (y_linie_mijloc+100) - 150 , 4);
+    myTufa = new tufaJetoane(740, (y_linie_mijloc+100) - 150 , 5);
     myTufa.expandare_in_linie();
     myTufa.conectare_tuburi_in_linie();
     //myTufa.expandare_in_v();
@@ -293,7 +292,7 @@ function tufaJetoane(x_start, y_start, nr_straturi){
     }
 
     this.conectare_tuburi_in_linie = function(){
-        console.log("index_ultimul_tub_adaugat: " + this.index_ultimul_tub_adaugat);
+        //console.log("index_ultimul_tub_adaugat: " + this.index_ultimul_tub_adaugat);
         //console.log("vector_jetoane.length - 1: " + (this.vector_jetoane.length - 1));
         //cat timp sunt mai putine tuburi decat jetoane-1 adauga tub
         if(this.index_ultimul_tub_adaugat < this.vector_jetoane.length){
@@ -307,16 +306,6 @@ function tufaJetoane(x_start, y_start, nr_straturi){
             this.index_ultimul_tub_adaugat += 1;
             this.conectare_tuburi_in_linie();
         }
-      /*
-        jeton_intrare = vector_jetoane[index_jeton_intrare];
-        jeton_iesire = vector_jetoane[index_jeton];
-        //nu insereaza tubul pentru jetonul 0
-        if (index_jeton_intrare != index_jeton){
-          myTub = new tub(jeton_intrare, jeton_iesire, TUB_CULOARE_GOL, TUB_NORMAL);
-          vector_tuburi.push(myTub);
-        }
-        index_jeton += 1;
-        */
     }
 
     this.expandare_in_v = function() {
@@ -344,6 +333,51 @@ function tufaJetoane(x_start, y_start, nr_straturi){
             }
         }
     }
+
+    this.conectare_tuburi_in_v = function(){
+        for(let i=0; i<this.nr_straturi; i++){
+          jeton_varf_strat = Math.pow(2,i);
+          console.log("jeton varf strat:" + jeton_varf_strat);
+
+          //sare peste primul strat
+          if(jeton_varf_strat>1){
+            jeton_varf_strat_precedent = Math.pow(2,i-1);
+            console.log("jeton varf strat precedent:" + jeton_varf_strat_precedent);
+
+            //pentru fiecare jeton din stratul precedent il conectez la
+            //cate 2 jetoane din stratul curent de sus in jos
+
+            for(let k=jeton_varf_strat_precedent; k < jeton_varf_strat; k++){
+                jeton_intrare = k;
+                jeton_iesire_1 = 2*k;
+                jeton_iesire_2 = 2*k + 1;
+
+                //console.log("jeton intrare: " + k)
+                //console.log("jeton iesire 1:" + jeton_iesire_1);
+                //console.log("jeton iesire 2:" + jeton_iesire_2);
+            }
+          }
+        }
+
+
+
+      /*
+        console.log("index_ultimul_tub_adaugat: " + this.index_ultimul_tub_adaugat);
+        //console.log("vector_jetoane.length - 1: " + (this.vector_jetoane.length - 1));
+        //cat timp sunt mai putine tuburi decat jetoane-1 adauga tub
+        if(this.index_ultimul_tub_adaugat < this.vector_jetoane.length){
+            //sare peste jetonul 0
+            if(this.index_ultimul_tub_adaugat > 0){
+              jeton_intrare = this.vector_jetoane[this.index_ultimul_tub_adaugat-1];
+              jeton_iesire = this.vector_jetoane[this.index_ultimul_tub_adaugat];
+              myTub = new tub(jeton_intrare, jeton_iesire, TUB_CULOARE_GOL, TUB_NORMAL);
+              this.vector_tuburi.push(myTub);
+            }
+            this.index_ultimul_tub_adaugat += 1;
+            this.conectare_tuburi_in_linie();*/
+
+    }
+
 
 
 
