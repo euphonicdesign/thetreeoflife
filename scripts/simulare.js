@@ -22,7 +22,9 @@ var IDENTARE_VERTICALA_GRUP_LEGENDA = 20;
 
 //var x_grup_legenda = 15;
 //var y_grup_legenda = 460;
-var x_grup_legenda = 15;
+var x_grup_legenda = 850;
+//var x_grup_legenda = 850;
+//var y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
 var y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
 
 //CULORI
@@ -228,9 +230,39 @@ function startJoc(){
 }
 
 function generare_retea_jetoane_v2() {
-    myTufa = new tufaJetoane(300, y_linie_mijloc, 4);
+    myTufa = new tufaJetoane(35, y_linie_mijloc+100, 5);
     myTufa.initializare();
-    //myTufa.expandare_in_line();
+    //myTufa.expandare_in_linie();
+    myTufa.expandare_in_v();
+    myTufa.alimentare_vector_jetoane_global();
+
+    myTufa = new tufaJetoane(300, (y_linie_mijloc+100) - 170 , 4);
+    myTufa.initializare();
+    //myTufa.expandare_in_linie();
+    myTufa.expandare_in_v();
+    myTufa.alimentare_vector_jetoane_global();
+
+    myTufa = new tufaJetoane(300, (y_linie_mijloc+100) + 170, 4);
+    myTufa.initializare();
+    //myTufa.expandare_in_linie();
+    myTufa.expandare_in_v();
+    myTufa.alimentare_vector_jetoane_global();
+
+    myTufa = new tufaJetoane(35 + 300 + 200, y_linie_mijloc+100, 5);
+    myTufa.initializare();
+    //myTufa.expandare_in_linie();
+    myTufa.expandare_in_v();
+    myTufa.alimentare_vector_jetoane_global();
+
+    myTufa = new tufaJetoane(770, (y_linie_mijloc+100) - 150 , 4);
+    myTufa.initializare();
+    myTufa.expandare_in_linie();
+    //myTufa.expandare_in_v();
+    myTufa.alimentare_vector_jetoane_global();
+
+    myTufa = new tufaJetoane(1000, (y_linie_mijloc +100) - 150, 4);
+    myTufa.initializare();
+    //myTufa.expandare_in_linie();
     myTufa.expandare_in_v();
     myTufa.alimentare_vector_jetoane_global();
 
@@ -242,14 +274,16 @@ function tufaJetoane(x_start, y_start, nr_straturi){
     this.nr_straturi = nr_straturi;
     this.vector_jetoane = [];
     this.tip_jeton = TIP_CERC;
+    this.factor_distantare_verticala = 1.5;
+    this.factor_distantare_orizontala = 1.8;
 
     this.initializare = function(){
         myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start, this.y_start, this.tip_jeton);
         this.vector_jetoane.push(myJeton);
     }
-    this.expandare_in_line = function() {
+    this.expandare_in_linie = function() {
         for(let i=1; i<=this.nr_straturi; i++){
-            distantare_orizontala = i * 2 * jeton_model_diametru;
+            distantare_orizontala = i * this.factor_distantare_orizontala * jeton_model_diametru;
             myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start + distantare_orizontala, this.y_start, this.tip_jeton);
             this.vector_jetoane.push(myJeton);
         }
@@ -257,15 +291,10 @@ function tufaJetoane(x_start, y_start, nr_straturi){
 
     this.expandare_in_v = function() {
         identare_verticala = 0;
-        factor_distantare_verticala = 1.5;
-        factor_distantare_orizontala = 1.8;
 
         for(let i=0; i<this.nr_straturi; i++){
             var nr_jetoane_per_strat = Math.pow(2,i)
-            identare_verticala += (Math.floor(nr_jetoane_per_strat/2)* jeton_model_diametru * factor_distantare_verticala)/2;
-
-            console.log("nr jetoane per strat: " + nr_jetoane_per_strat);
-            console.log("nr jetoane per strat/2: " + nr_jetoane_per_strat/2);
+            identare_verticala += (Math.floor(nr_jetoane_per_strat/2)* jeton_model_diametru * this.factor_distantare_verticala)/2;
 
             for(let j=0; j < nr_jetoane_per_strat; j++){
                 //pentru stratul 0 nu e nevoie de distantare orizonatla sau verticala
@@ -275,14 +304,13 @@ function tufaJetoane(x_start, y_start, nr_straturi){
                 //pentru straturile 1,2,3 - jetoanele vor fi distantate in mod corespunzator
                 else{
                   //nr_jetoane = Math.pow(2,)
-                  distantare_orizontala = i * factor_distantare_orizontala * jeton_model_diametru;
-                  distantare_verticala = j * factor_distantare_verticala * jeton_model_diametru;
+                  distantare_orizontala = i * this.factor_distantare_orizontala * jeton_model_diametru;
+                  distantare_verticala = j * this.factor_distantare_verticala * jeton_model_diametru;
                   y_jeton = this.y_start - identare_verticala + distantare_verticala;
                   myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start + distantare_orizontala, y_jeton, this.tip_jeton);
 
                 }
                 this.vector_jetoane.push(myJeton);
-
             }
         }
     }
@@ -1139,6 +1167,8 @@ function actualizareParametriiVersiune(){
       console.log("Versiune Selectata: " + TEXT_VERSIUNEA_1);
       CANVAS_WIDTH = CANVAS_WIDTH_V1;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V1;
+      y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
+      x_grup_legenda = 850;
   }
   else{
       //V2
@@ -1146,11 +1176,13 @@ function actualizareParametriiVersiune(){
       console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
       CANVAS_WIDTH = CANVAS_WIDTH_V2;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V2;
+      y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
+      x_grup_legenda = 850;
   }
 
   //actualizare variabile dependente
   y_linie_mijloc = CANVAS_HEIGHT / 2 - 100 + 25/2;
-  y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
+
   yRezervor = y_grup_legenda;
   y_jeton_legenda = yRezervor + jeton_model_raza;
   y_text_legenda = y_jeton_legenda + IDENTARE_VERTICALA_TEXT_LEGENDA;
