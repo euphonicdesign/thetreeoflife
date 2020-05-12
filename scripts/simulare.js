@@ -219,11 +219,73 @@ function startJoc(){
       setare_conditii_initiale_v1();
   }else{
       console.log("versiunea 2 nu are nimic de afisat");
+      generare_retea_jetoane_v2();
   }
 
 
 
   mySuprafataJoc.creare();
+}
+
+function generare_retea_jetoane_v2() {
+    myTufa = new tufaJetoane(jeton_model_x, y_linie_mijloc, 3);
+    myTufa.initializare();
+    //myTufa.expandare_in_line();
+    myTufa.expandare_in_v();
+    myTufa.alimentare_vector_jetoane_global();
+
+}
+
+function tufaJetoane(x_start, y_start, nr_straturi){
+    this.x_start = x_start;
+    this.y_start = y_start;
+    this.nr_straturi = nr_straturi;
+    this.vector_jetoane = [];
+    this.tip_jeton = TIP_CERC;
+
+    this.initializare = function(){
+        myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start, this.y_start, this.tip_jeton);
+        this.vector_jetoane.push(myJeton);
+    }
+    this.expandare_in_line = function() {
+        for(let i=1; i<=this.nr_straturi; i++){
+            distantare_orizontala = i * 2 * jeton_model_diametru;
+            myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start + distantare_orizontala, this.y_start, this.tip_jeton);
+            this.vector_jetoane.push(myJeton);
+        }
+    }
+
+    this.expandare_in_v = function() {
+        for(let i=1; i<=this.nr_straturi; i++){
+            distantare_orizontala = i * 2 * jeton_model_diametru;
+            for(let j=1; j<= i * 2 ; j++){
+                distantare_verticala = j * 1 * jeton_model_diametru;
+                y_jeton = this.y_start - distantare_verticala;
+                myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start + distantare_orizontala, y_jeton, this.tip_jeton);
+                this.vector_jetoane.push(myJeton);
+            }
+        }
+    }
+
+    this.expandare_in_line = function() {
+        for(let i=1; i<=this.nr_straturi; i++){
+            distantare_orizontala = i * 2 * jeton_model_diametru;
+            myJeton = new jeton(jeton_model_raza, CULOARE_JETON, this.x_start + distantare_orizontala, this.y_start, this.tip_jeton);
+            this.vector_jetoane.push(myJeton);
+        }
+    }
+
+    this.penetrare_jeton_start = function(){
+        vector_jetoane[0].staredetransmitere = true;
+        vector_jetoane[0].penetrat = true;
+        vector_jetoane[0].stare_frunza = FRUNZA_PENETRATA;
+    }
+
+    this.alimentare_vector_jetoane_global = function() {
+        for(let i=0; i<this.vector_jetoane.length; i++){
+            vector_jetoane.push(this.vector_jetoane[i]);
+        }
+    }
 }
 
 var mySuprafataJoc = {
