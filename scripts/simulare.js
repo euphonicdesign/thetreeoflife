@@ -94,6 +94,11 @@ var PROCENT_DISTRIBUTIE_MASCA = 0.2;
 var PROCENT_DISTRIBUTIE_ACASA = 0.1;
 var PROCENT_DISTRIBUTIE_AFARA = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_ACASA;
 
+var TIP_PROTECTIE_MASCA = 0;
+var TIP_PROTECTIE_ACASA = 1;
+var TIP_OPERATIE_INCREMENTARE = 0;
+var TIP_OPERATIE_DECREMENTARE = 1;
+
 var FACTOR_ACCELERARE_DEBIT = 4;
 var DEBIT_TRANSMITERE_JETON = 0.01 * FACTOR_ACCELERARE_DEBIT;
 var DEBIT_UMPLERE_JETON = 0.01 * FACTOR_ACCELERARE_DEBIT;
@@ -270,7 +275,6 @@ function startJoc(){
       generare_retea_jetoane_v2();
       generare_retea_butoane_si_afisaje();
   }
-
   mySuprafataJoc.creare();
 }
 
@@ -319,10 +323,10 @@ function afisaj(x,y,afisaj_variabila){
 
     this.actualizare_valoare = function() {
       if(this.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
-        this.valoare = PROCENT_DISTRIBUTIE_MASCA.toFixed(1);
+        this.valoare = PROCENT_DISTRIBUTIE_MASCA;
       }
       else if(this.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
-        this.valoare = PROCENT_DISTRIBUTIE_ACASA.toFixed(1);
+        this.valoare = PROCENT_DISTRIBUTIE_ACASA;
       }
     }
 
@@ -343,7 +347,7 @@ function afisaj(x,y,afisaj_variabila){
         ctx.font = this.marime_text;
         //ctx.lineWidth = 0.1;
         //ctx.strokeStyle = "black";
-        ctx.fillText(this.valoare, this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
+        ctx.fillText(this.valoare.toFixed(1), this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
     }
 
 }
@@ -1060,24 +1064,69 @@ function interactioneaza(e) {
             if (vector_butoane[i].tip_buton == TIP_BUTON_PLUS){
                 //console.log("buton +");
                 if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
-                    PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
+                      //PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
+                      actualizareProcenteDistributieProtectie(TIP_PROTECTIE_MASCA, TIP_OPERATIE_INCREMENTARE);
                     //console.log("PROCENT_DISTRIBUTIE_MASCA " + PROCENT_DISTRIBUTIE_MASCA);
                 }
                 else if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
-                    PROCENT_DISTRIBUTIE_ACASA += INCREMENT_BUTON;
+                    //PROCENT_DISTRIBUTIE_ACASA += INCREMENT_BUTON;
+                    actualizareProcenteDistributieProtectie(TIP_PROTECTIE_ACASA, TIP_OPERATIE_INCREMENTARE);
                 }
             }
             else if (vector_butoane[i].tip_buton == TIP_BUTON_MINUS){
                 //console.log("buton -");
                 if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
-                    PROCENT_DISTRIBUTIE_MASCA -= INCREMENT_BUTON;
+                    //PROCENT_DISTRIBUTIE_MASCA -= INCREMENT_BUTON;
+                    actualizareProcenteDistributieProtectie(TIP_PROTECTIE_MASCA, TIP_OPERATIE_DECREMENTARE);
                 }
                 else if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
-                    PROCENT_DISTRIBUTIE_ACASA -= INCREMENT_BUTON;
+                    //PROCENT_DISTRIBUTIE_ACASA -= INCREMENT_BUTON;
+                    actualizareProcenteDistributieProtectie(TIP_PROTECTIE_ACASA, TIP_OPERATIE_DECREMENTARE);
                 }
             }
+
+        console.log("PROCENT_DISTRIBUTIE_MASCA " + PROCENT_DISTRIBUTIE_MASCA);
+        console.log("PROCENT_DISTRIBUTIE_ACASA " + PROCENT_DISTRIBUTIE_ACASA);
+        console.log("PROCENT_DISTRIBUTIE_AFARA " + PROCENT_DISTRIBUTIE_AFARA);
+
         }
     }
+}
+
+function actualizareProcenteDistributieProtectie(tip_protectie, tip_operatie){
+    segment_afara = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_ACASA;
+    segment_masca = 1 - PROCENT_DISTRIBUTIE_ACASA - PROCENT_DISTRIBUTIE_AFARA;
+    segment_acasa = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_AFARA;
+    sloturi_libere_afara = Math.round(segment_afara / INCREMENT_BUTON, 1);
+    sloturi_libere_masca = Math.round(segment_masca / INCREMENT_BUTON, 1);
+    sloturi_libere_acasa = Math.round(segment_acasa / INCREMENT_BUTON, 1);
+    console.log(sloturi_libere_afara);
+
+    if(tip_protectie == TIP_PROTECTIE_MASCA){
+        if(tip_operatie == TIP_OPERATIE_INCREMENTARE && sloturi_libere_afara >= 1 ){
+            PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
+            PROCENT_DISTRIBUTIE_AFARA -= INCREMENT_BUTON;
+        }
+        else if(tip_operatie == TIP_OPERATIE_DECREMENTARE && sloturi_libere_masca >= 1 ){
+            PROCENT_DISTRIBUTIE_MASCA -= INCREMENT_BUTON;
+            PROCENT_DISTRIBUTIE_AFARA += INCREMENT_BUTON;
+        }
+    }
+    else if(tip_protectie == TIP_PROTECTIE_ACASA){
+        PROCENT_DISTRIBUTIE_ACASA += INCREMENT_BUTON;
+        PROCENT_DISTRIBUTIE_AFARA -= INCREMENT_BUTON;
+    }
+
+    //PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
+    //actualizareProcenteDistributieProtectie(TIP_PROTECTIE_MASCA, TIP_OPERATIE_INCREMENTARE);
+
+    //PROCENT_DISTRIBUTIE_AFARA = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_ACASA;
+    /*
+    console.log("sloturi liber: " + sloturi_libere);
+    if(sloturi_libere >= 1){
+      PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
+      PROCENT_DISTRIBUTIE_ACASA -= INCREMENT_BUTON;
+    }*/
 }
 
 function actualizareContor(){
