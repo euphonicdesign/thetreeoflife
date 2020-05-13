@@ -820,7 +820,7 @@ function actualizareSuprafataJoc() {
         if(VERSIUNEA_SELECTATA == VERSIUNEA_1)
             desenareContor();
         else if(VERSIUNEA_SELECTATA == VERSIUNEA_2) {
-            //desenareContor2();
+            desenareContor2();
         }
 
         desenareRezervor();
@@ -928,7 +928,6 @@ function desenareContor(){
     ctx = mySuprafataJoc.context;
 
     //Contor
-
     //desenare culori
 
     //desenare jeton normal
@@ -1024,6 +1023,109 @@ function desenareContor(){
     ctx.fillText(TEXT_LEGENDA_MASCA + " (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
     ctx.fillText(TEXT_LEGENDA_ACASA + " (100%)" , x_text_legenda, y_text_legenda + 150);
     //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);
+
+}
+
+function desenareContor2(){
+    ctx = mySuprafataJoc.context;
+
+    //Contor
+    //desenare culori
+
+    //desenare jeton normal
+    ctx.fillStyle = CULOARE_FRUNZA_NORMALA;
+    ctx.strokeStyle = CULOARE_MARGINE_JETON;
+    //ctx.strokeStyle = this.culoare_stare_frunza;
+    ctx.lineWidth = grosime_margine_jeton;
+    ctx.beginPath();
+
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda, jeton_model_raza, 0, Math.PI*2, false);
+    ctx.closePath();
+    ctx.fill();
+    //ctx.stroke();
+
+    //desenare jeton penetrat
+    ctx.fillStyle = CULOARE_FRUNZA_PENETRATA;
+    ctx.strokeStyle = CULOARE_MARGINE_JETON;
+    //ctx.strokeStyle = this.culoare_stare_frunza;
+    ctx.lineWidth = grosime_margine_jeton;
+    ctx.beginPath();
+
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 30, jeton_model_raza, 0, Math.PI*2, false);
+    ctx.closePath();
+    ctx.fill();
+    //ctx.stroke();
+
+    //desenare jeton vindecat
+    ctx.fillStyle = CULOARE_FRUNZA_VINDECATA;
+    ctx.strokeStyle = CULOARE_MARGINE_JETON;
+    //ctx.strokeStyle = this.culoare_stare_frunza;
+    ctx.lineWidth = grosime_margine_jeton;
+    ctx.beginPath();
+
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 60, jeton_model_raza, 0, Math.PI*2, false);
+    ctx.closePath();
+    ctx.fill();
+    //ctx.stroke();
+
+    //desenare jeton pierdut
+    ctx.fillStyle = CULOARE_FRUNZA_PIERDUTA;
+    ctx.strokeStyle = CULOARE_MARGINE_JETON;
+    //ctx.strokeStyle = this.culoare_stare_frunza;
+    ctx.lineWidth = grosime_margine_jeton;
+    ctx.beginPath();
+
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 90, jeton_model_raza, 0, Math.PI*2, false);
+    ctx.closePath();
+    ctx.fill();
+    //ctx.stroke();
+/*
+    //desenare jeton masca
+    ctx.fillStyle = CULOARE_MASCA;
+    ctx.strokeStyle = CULOARE_MARGINE_JETON;
+    //ctx.strokeStyle = this.culoare_stare_frunza;
+    ctx.lineWidth = grosime_margine_jeton;
+    ctx.beginPath();
+
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 120, jeton_model_raza, 0, Math.PI*2, false);
+    ctx.closePath();
+    ctx.fill();
+    //ctx.stroke();
+
+    //desenare jeton acasa
+    ctx.fillStyle = CULOARE_ACASA;
+    ctx.strokeStyle = CULOARE_MARGINE_JETON;
+    //ctx.strokeStyle = this.culoare_stare_frunza;
+    ctx.lineWidth = grosime_margine_jeton;
+    ctx.beginPath();
+
+    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+    ctx.arc(x_jeton_legenda, y_jeton_legenda + 150, jeton_model_raza, 0, Math.PI*2, false);
+    ctx.closePath();
+    ctx.fill();
+    //ctx.stroke();*/
+
+
+    //desenare text
+    ctx.fillStyle = CULOARE_TEXT_LEGENDA;
+    ctx.font = FONT_TEXT_LEGENDA;
+    //ctx.lineWidth = 0.1;
+    //ctx.strokeStyle = "black";
+    ctx.fillText(total_frunze_normale + " " + TEXT_LEGENDA_FRUNZE_NORMALE, x_text_legenda, y_text_legenda);
+    ctx.fillText(total_frunze_penetrate + " " + TEXT_LEGENDA_FRUNZE_PATRUNSE , x_text_legenda, y_text_legenda + 30);
+    ctx.fillText(total_frunze_vindecate + " " + TEXT_LEGENDA_FRUNZE_VINDECATE , x_text_legenda, y_text_legenda + 60);
+    ctx.fillText(total_frunze_pierdute + " " + TEXT_LEGENDA_FRUNZE_PIERDUTE , x_text_legenda, y_text_legenda + 90);
+
+/*
+    ctx.fillStyle = CULOARE_TEXT_PROTECTII;
+    ctx.fillText(TEXT_LEGENDA_MASCA + " (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
+    ctx.fillText(TEXT_LEGENDA_ACASA + " (100%)" , x_text_legenda, y_text_legenda + 150);
+    //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);*/
 
 }
 
@@ -1318,7 +1420,7 @@ function actualizareParametriiVersiune(){
       //console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
       CANVAS_WIDTH = CANVAS_WIDTH_V2;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V2;
-      INALTIME_REZERVOR = 74;
+      INALTIME_REZERVOR = 117;
       //y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA - 10;
       //y_grup_legenda = 50;
       //x_grup_legenda = 850;
