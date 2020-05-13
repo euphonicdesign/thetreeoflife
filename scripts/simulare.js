@@ -229,9 +229,22 @@ function startJoc(){
 }
 
 function generare_retea_jetoane_v2() {
+    distantare_ramuri = 50;
+    coborare_ramura_sus = 15;
+    y_ramura_sus = CANVAS_HEIGHT_V2 / 3 - distantare_ramuri + coborare_ramura_sus;
+    y_ramura_jos = y_ramura_sus * 2 + 120;
     //generare tufe
-    tufa1 = new tufaJetoane(35, y_linie_mijloc+100, 4, TIP_EXPANDARE_IN_V);
+    tufa1 = new tufaJetoane(35, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
     tufa1.initializare();
+
+    tufa2 = new tufaJetoane(35, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
+    tufa2.initializare();
+
+
+
+
+
+    /*
 
     tufa2 = new tufaJetoane(330, (y_linie_mijloc+100) - 170 , 4, TIP_EXPANDARE_IN_V);
     tufa2.initializare();
@@ -302,7 +315,7 @@ function generare_retea_jetoane_v2() {
     vector_tuburi.push(myTub);
 
     myTub = new tub(tufa4_prim.vector_jetoane[14], tufa3.vector_jetoane[1], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
+    vector_tuburi.push(myTub);*/
 
     //setare conditii initializale
     tufa1.penetrare_jeton_start();
