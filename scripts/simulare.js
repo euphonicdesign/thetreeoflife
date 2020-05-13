@@ -275,6 +275,20 @@ function generare_retea_jetoane_v2() {
     myTub = new tub(tufas3.vector_jetoane[13], tufas4.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
     vector_tuburi.push(myTub);
 
+    x_tufas += distantare_tufe;
+    tufas5 = new tufaJetoane(x_tufas, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
+    tufas5.initializare();
+
+    myTub = new tub(tufas4.vector_jetoane[12], tufas5.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    x_tufas += distantare_tufe;
+    tufas6 = new tufaJetoane(x_tufas, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
+    tufas6.initializare();
+
+    myTub = new tub(tufas5.vector_jetoane[10], tufas6.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
 
 
     //generare tufe ramura inferioara
@@ -282,85 +296,34 @@ function generare_retea_jetoane_v2() {
     tufaj1 = new tufaJetoane(x_tufaj, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
     tufaj1.initializare();
 
-    //conectare ramuri cu tub
+
+
+    x_tufaj += distantare_tufe;
+    tufaj2 = new tufaJetoane(x_tufaj, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
+    tufaj2.initializare();
+
+    myTub = new tub(tufaj1.vector_jetoane[10], tufaj2.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    x_tufaj += distantare_tufe;
+    tufaj3 = new tufaJetoane(x_tufaj, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
+    tufaj3.initializare();
+
+    myTub = new tub(tufaj2.vector_jetoane[11], tufaj3.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    x_tufaj += distantare_tufe;
+    tufaj4 = new tufaJetoane(x_tufaj, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
+    tufaj4.initializare();
+
+    myTub = new tub(tufaj3.vector_jetoane[9], tufaj4.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    //conectare ramuri cu tuburi
     myTub = new tub(tufas2.vector_jetoane[14], tufaj1.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
     vector_tuburi.push(myTub);
-
-
-
-    /*
-
-    tufa2 = new tufaJetoane(330, (y_linie_mijloc+100) - 170 , 4, TIP_EXPANDARE_IN_V);
-    tufa2.initializare();
-
-    tufa3 = new tufaJetoane(330, (y_linie_mijloc+100) + 170, 4, TIP_EXPANDARE_IN_V);
-    tufa3.initializare();
-
-    tufa4 = new tufaJetoane(35 + 300 + 200, y_linie_mijloc+100, 5, TIP_EXPANDARE_IN_V);
-    tufa4.initializare();
-
-    tufa4_prim = new tufaJetoane(210, (y_linie_mijloc+100) , 4, TIP_EXPANDARE_IN_V);
-    tufa4_prim.initializare();
-
-    tufa5 = new tufaJetoane(520, (y_linie_mijloc+100) - 170 , 3, TIP_EXPANDARE_IN_V);
-    tufa5.initializare();
-
-    tufa6 = new tufaJetoane(520, (y_linie_mijloc+100) + 170 , 3, TIP_EXPANDARE_IN_V);
-    tufa6.initializare();
-
-    tufa7 = new tufaJetoane(760, (y_linie_mijloc +100) + 155, 4, TIP_EXPANDARE_IN_V);
-    tufa7.initializare();
-
-
-
-    //conectare tuburi individuale
-    myTub = new tub(tufa1.vector_jetoane[7], tufa2.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    myTub = new tub(tufas4.vector_jetoane[14], tufaj3.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
     vector_tuburi.push(myTub);
-    myTub = new tub(tufa1.vector_jetoane[11], tufa4_prim.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa1.vector_jetoane[14], tufa3.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa2.vector_jetoane[14], tufa4.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa3.vector_jetoane[7], tufa4.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa1.vector_jetoane[10], tufa4_prim.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    //myTub = new tub(tufa1.vector_jetoane[4], tufa4_prim.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    //vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa4_prim.vector_jetoane[10], tufa2.vector_jetoane[14], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa4_prim.vector_jetoane[11], tufa3.vector_jetoane[7], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa2.vector_jetoane[10], tufa5.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa3.vector_jetoane[11], tufa6.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa5.vector_jetoane[6], tufa4.vector_jetoane[1], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa6.vector_jetoane[3], tufa4.vector_jetoane[2], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa4.vector_jetoane[26], tufa7.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa4_prim.vector_jetoane[7], tufa2.vector_jetoane[2], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);
-
-    myTub = new tub(tufa4_prim.vector_jetoane[14], tufa3.vector_jetoane[1], TUB_CULOARE_GOL, TUB_NORMAL);
-    vector_tuburi.push(myTub);*/
-
 
 
     //asignare metoda preventie
