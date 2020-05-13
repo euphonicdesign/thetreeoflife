@@ -128,6 +128,8 @@ var TIP_BUTON_MINUS = 1;
 var BUTON_VARIABILA_MASCA = 0;
 var BUTON_VARIABILA_ACASA = 1;
 
+var INCREMENT_BUTON = 0.1;
+
 //retea afisaje
 var vector_afisaje = [];
 var AFISAJ_INALTIME = jeton_model_diametru;
@@ -355,6 +357,8 @@ function buton(x,y,tip_buton,afjisaj){
     this.identare_text_verticala = 18;
     this.identare_text_orizontala = 10;
     this.marime_text = "17px Arial";
+    this.mijloc_x = this.x + BUTON_LATIME / 2;
+    this.mijloc_y = this.y + BUTON_INALTIME / 2;
 
     //constructor
     if(this.tip_buton == TIP_BUTON_PLUS){
@@ -1012,6 +1016,8 @@ function actualizareSuprafataJoc() {
   }
 }
 
+
+//Interactiuni mouse
 function interactioneaza(e) {
     // calcul coordonate mouse raportat la pozitie canvas
     //console.log("x: " + e.clientX + " y: " + e.clientY);
@@ -1037,6 +1043,41 @@ function interactioneaza(e) {
             else if (vector_jetoane[i].metoda_preventie == METODA_PREVENTIE_MASCA){
                 vector_jetoane[i].metoda_preventie = METODA_PREVENTIE_ACASA;
             }
+        }
+    }
+
+    for(let i=0; i<vector_butoane.length; i++){
+        distanta_click_x = mouseX - vector_butoane[i].mijloc_x;
+        distanta_click_y = mouseY - vector_butoane[i].mijloc_y;
+
+        //distanta_click = Math.pow(distanta_click_x,2) + Math.pow(distanta_click_y,2);
+        margine_x = BUTON_LATIME / 2;
+        margine_y = BUTON_INALTIME / 2;
+        if(Math.abs(distanta_click_x) < margine_x && Math.abs(distanta_click_y) < margine_y){
+            console.log("vector buton " + i);
+            console.log("distanta click x: " + distanta_click_x);
+            console.log("distanta click y: " + distanta_click_y);
+            if (vector_butoane[i].tip_buton == TIP_BUTON_PLUS){
+                console.log("buton +");
+                if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
+                    PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
+                    console.log("PROCENT_DISTRIBUTIE_MASCA " + PROCENT_DISTRIBUTIE_MASCA);
+                }
+                else if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
+                    PROCENT_DISTRIBUTIE_ACASA += INCREMENT_BUTON;
+                }
+            }
+            else if (vector_butoane[i].tip_buton == TIP_BUTON_MINUS){
+                console.log("buton -");
+                if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
+                    PROCENT_DISTRIBUTIE_MASCA -= INCREMENT_BUTON;
+                }
+                else if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
+                    PROCENT_DISTRIBUTIE_ACASA -= INCREMENT_BUTON;
+                }
+            }
+
+
         }
 
     }
