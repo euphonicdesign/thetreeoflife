@@ -328,9 +328,8 @@ function generare_retea_jetoane_v2() {
 
     //asignare metoda preventie
     for(let i=1; i<vector_jetoane.length; i++){
-        nr_stari = 3;
-        metoda_preventie_random = Math.floor(Math.random() * Math.floor(nr_stari));
-        //console.log("i = " + i + " stare: " + metoda_preventie_random);
+        var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
+        metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
         vector_jetoane[i].metoda_preventie = metoda_preventie_random;
     }
 
@@ -1176,9 +1175,9 @@ function setare_conditii_initiale_v1() {
 
     }
     for(let i=1; i<vector_jetoane.length; i++){
-        nr_stari = 3;
-        metoda_preventie_random = Math.floor(Math.random() * Math.floor(nr_stari));
-        //console.log("i = " + i + " stare: " + metoda_preventie_random);
+        var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
+        metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
+
         vector_jetoane[i].metoda_preventie = metoda_preventie_random;
     }
 }
