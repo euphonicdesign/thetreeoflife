@@ -131,6 +131,9 @@ var me2_y = jeton_model_y + 100;
 var TIP_EXPANDARE_IN_V = "expandare_in_v";
 var TIP_EXPANDARE_IN_LINIE = "expandare_in_linie";
 
+var FACTOR_DISTANTARE_JETOANE_VERTICALA = 1.5;
+var FACTOR_DISTANTARE_JETOANE_ORIZONATALA = 1.9;
+
 //GRUP_LEGENDA (Rezervor + Legenda)
 var distantareOrizontalaRezervorLegenda = 30;
 var FONT_TEXT_LEGENDA = "20px Arial";
@@ -230,17 +233,39 @@ function startJoc(){
 
 function generare_retea_jetoane_v2() {
     distantare_ramuri = 50;
-    coborare_ramura_sus = 15;
+    coborare_ramura_sus = 20;
+    x_ramura_sus = 35;
     y_ramura_sus = CANVAS_HEIGHT_V2 / 3 - distantare_ramuri + coborare_ramura_sus;
     y_ramura_jos = y_ramura_sus * 2 + 120;
-    //generare tufe
-    tufa1 = new tufaJetoane(35, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
-    tufa1.initializare();
+    x_ramura_jos = x_ramura_sus + jeton_model_diametru * 8 * FACTOR_DISTANTARE_JETOANE_ORIZONATALA;
+    distantare_tufe = jeton_model_diametru * 4 * FACTOR_DISTANTARE_JETOANE_ORIZONATALA;
 
-    tufa2 = new tufaJetoane(35, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
-    tufa2.initializare();
+    //generare tufe ramura superiora
+    x_tufas = x_ramura_sus;
+    tufas1 = new tufaJetoane(x_tufas, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
+    tufas1.initializare();
 
+    //setare conditii initializale tufa1 ramura superioara
+    tufas1.penetrare_jeton_start();
 
+    x_tufas += distantare_tufe;
+    tufas2 = new tufaJetoane(x_tufas, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
+    tufas2.initializare();
+
+    //conectare tufe cu tub
+    myTub = new tub(tufas1.vector_jetoane[11], tufas2.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+    myTub = new tub(tufas1.vector_jetoane[12], tufas2.vector_jetoane[2], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    //generare tufe ramura inferioara
+    x_tufaj = x_ramura_jos;
+    tufaj1 = new tufaJetoane(x_tufaj, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
+    tufaj1.initializare();
+
+    //conectare ramuri cu tub
+    myTub = new tub(tufas2.vector_jetoane[14], tufaj1.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
 
 
 
@@ -317,8 +342,7 @@ function generare_retea_jetoane_v2() {
     myTub = new tub(tufa4_prim.vector_jetoane[14], tufa3.vector_jetoane[1], TUB_CULOARE_GOL, TUB_NORMAL);
     vector_tuburi.push(myTub);*/
 
-    //setare conditii initializale
-    tufa1.penetrare_jeton_start();
+
 
     //asignare metoda preventie
     for(let i=1; i<vector_jetoane.length; i++){
@@ -339,8 +363,8 @@ function tufaJetoane(x_start, y_start, nr_straturi, tip_expandare){
     this.vector_tuburi = [];
     this.index_ultimul_tub_adaugat = 0;
     this.tip_jeton = TIP_CERC;
-    this.factor_distantare_verticala = 1.5;
-    this.factor_distantare_orizontala = 1.8;
+    this.factor_distantare_verticala = FACTOR_DISTANTARE_JETOANE_VERTICALA;
+    this.factor_distantare_orizontala = FACTOR_DISTANTARE_JETOANE_ORIZONATALA;
 
     this.initializare = function(){
         if(this.tip_expandare == TIP_EXPANDARE_IN_V){
@@ -1308,8 +1332,10 @@ function actualizareParametriiVersiune(){
       CANVAS_WIDTH = CANVAS_WIDTH_V2;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V2;
       //y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA - 10;
-      y_grup_legenda = 50;
-      x_grup_legenda = 850;
+      //y_grup_legenda = 50;
+      //x_grup_legenda = 850;
+      y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
+      x_grup_legenda = 15;
   }
 
   //actualizare variabile dependente
