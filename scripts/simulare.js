@@ -1113,8 +1113,14 @@ function actualizareProcenteDistributieProtectie(tip_protectie, tip_operatie){
         }
     }
     else if(tip_protectie == TIP_PROTECTIE_ACASA){
-        PROCENT_DISTRIBUTIE_ACASA += INCREMENT_BUTON;
-        PROCENT_DISTRIBUTIE_AFARA -= INCREMENT_BUTON;
+        if(tip_operatie == TIP_OPERATIE_INCREMENTARE && sloturi_libere_afara >= 1 ){
+            PROCENT_DISTRIBUTIE_ACASA += INCREMENT_BUTON;
+            PROCENT_DISTRIBUTIE_AFARA -= INCREMENT_BUTON;
+        }
+        else if(tip_operatie == TIP_OPERATIE_DECREMENTARE && sloturi_libere_acasa >= 1 ){
+            PROCENT_DISTRIBUTIE_ACASA -= INCREMENT_BUTON;
+            PROCENT_DISTRIBUTIE_AFARA += INCREMENT_BUTON;
+        }
     }
 
     //PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
