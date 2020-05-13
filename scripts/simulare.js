@@ -305,6 +305,9 @@ function generare_retea_jetoane_v2() {
     myTub = new tub(tufaj1.vector_jetoane[10], tufaj2.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
     vector_tuburi.push(myTub);
 
+    myTub = new tub(tufaj1.vector_jetoane[9], tufaj2.vector_jetoane[1], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
     x_tufaj += distantare_tufe;
     tufaj3 = new tufaJetoane(x_tufaj, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
     tufaj3.initializare();
@@ -821,6 +824,7 @@ function actualizareSuprafataJoc() {
             desenareContor();
         else if(VERSIUNEA_SELECTATA == VERSIUNEA_2) {
             desenareContor2();
+            desenarePanelConfigurareProtectii();
         }
 
         desenareRezervor();
@@ -1126,6 +1130,10 @@ function desenareContor2(){
     ctx.fillText(TEXT_LEGENDA_MASCA + " (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
     ctx.fillText(TEXT_LEGENDA_ACASA + " (100%)" , x_text_legenda, y_text_legenda + 150);
     //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);*/
+
+}
+
+function desenarePanelConfigurareProtectii(){
 
 }
 
