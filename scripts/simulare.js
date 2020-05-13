@@ -258,6 +258,25 @@ function generare_retea_jetoane_v2() {
     myTub = new tub(tufas1.vector_jetoane[12], tufas2.vector_jetoane[2], TUB_CULOARE_GOL, TUB_NORMAL);
     vector_tuburi.push(myTub);
 
+    x_tufas += distantare_tufe;
+    tufas3 = new tufaJetoane(x_tufas, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
+    tufas3.initializare();
+
+    //conectare tufe cu tub
+    myTub = new tub(tufas2.vector_jetoane[11], tufas3.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+    x_tufas += distantare_tufe;
+    tufas4 = new tufaJetoane(x_tufas, y_ramura_sus, 4, TIP_EXPANDARE_IN_V);
+    tufas4.initializare();
+
+    myTub = new tub(tufas3.vector_jetoane[3], tufas4.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+    myTub = new tub(tufas3.vector_jetoane[13], tufas4.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
+    vector_tuburi.push(myTub);
+
+
+
     //generare tufe ramura inferioara
     x_tufaj = x_ramura_jos;
     tufaj1 = new tufaJetoane(x_tufaj, y_ramura_jos, 4, TIP_EXPANDARE_IN_V);
