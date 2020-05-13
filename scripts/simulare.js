@@ -816,7 +816,12 @@ function actualizareSuprafataJoc() {
 
         //Legenda si contor
         actualizareContor();
-        desenareContor();
+
+        if(VERSIUNEA_SELECTATA == VERSIUNEA_1)
+            desenareContor();
+        else if(VERSIUNEA_SELECTATA == VERSIUNEA_2) {
+            //desenareContor2();
+        }
 
         desenareRezervor();
 
@@ -1303,6 +1308,7 @@ function actualizareParametriiVersiune(){
       //console.log("Versiune Selectata: " + TEXT_VERSIUNEA_1);
       CANVAS_WIDTH = CANVAS_WIDTH_V1;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V1;
+      INALTIME_REZERVOR = 174;
       y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
       x_grup_legenda = 15;
   }
@@ -1312,6 +1318,7 @@ function actualizareParametriiVersiune(){
       //console.log("Versiune Selectata: " + TEXT_VERSIUNEA_2);
       CANVAS_WIDTH = CANVAS_WIDTH_V2;
       CANVAS_HEIGHT = CANVAS_HEIGHT_V2;
+      INALTIME_REZERVOR = 74;
       //y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA - 10;
       //y_grup_legenda = 50;
       //x_grup_legenda = 850;
@@ -1324,6 +1331,7 @@ function actualizareParametriiVersiune(){
   xRezervor = x_grup_legenda;
   yRezervor = y_grup_legenda;
   xApaRezervor = xRezervor;
+  yApaRezervor = yRezervor + INALTIME_REZERVOR - nivelApaRezervor;
   y_jeton_legenda = yRezervor + jeton_model_raza;
   y_text_legenda = y_jeton_legenda + IDENTARE_VERTICALA_TEXT_LEGENDA;
 
