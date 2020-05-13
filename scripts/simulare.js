@@ -319,10 +319,10 @@ function afisaj(x,y,afisaj_variabila){
 
     this.actualizare_valoare = function() {
       if(this.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
-        this.valoare = PROCENT_DISTRIBUTIE_MASCA;
+        this.valoare = PROCENT_DISTRIBUTIE_MASCA.toFixed(1);
       }
       else if(this.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
-        this.valoare = PROCENT_DISTRIBUTIE_ACASA;
+        this.valoare = PROCENT_DISTRIBUTIE_ACASA.toFixed(1);
       }
     }
 
@@ -348,7 +348,7 @@ function afisaj(x,y,afisaj_variabila){
 
 }
 
-function buton(x,y,tip_buton,afjisaj){
+function buton(x,y,tip_buton,afisaj){
     this.x = x;
     this.y = y;
     this.tip_buton = tip_buton;
@@ -1054,21 +1054,21 @@ function interactioneaza(e) {
         margine_x = BUTON_LATIME / 2;
         margine_y = BUTON_INALTIME / 2;
         if(Math.abs(distanta_click_x) < margine_x && Math.abs(distanta_click_y) < margine_y){
-            console.log("vector buton " + i);
-            console.log("distanta click x: " + distanta_click_x);
-            console.log("distanta click y: " + distanta_click_y);
+            //console.log("vector buton " + i);
+            //console.log("distanta click x: " + distanta_click_x);
+            //console.log("distanta click y: " + distanta_click_y);
             if (vector_butoane[i].tip_buton == TIP_BUTON_PLUS){
-                console.log("buton +");
+                //console.log("buton +");
                 if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
                     PROCENT_DISTRIBUTIE_MASCA += INCREMENT_BUTON;
-                    console.log("PROCENT_DISTRIBUTIE_MASCA " + PROCENT_DISTRIBUTIE_MASCA);
+                    //console.log("PROCENT_DISTRIBUTIE_MASCA " + PROCENT_DISTRIBUTIE_MASCA);
                 }
                 else if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
                     PROCENT_DISTRIBUTIE_ACASA += INCREMENT_BUTON;
                 }
             }
             else if (vector_butoane[i].tip_buton == TIP_BUTON_MINUS){
-                console.log("buton -");
+                //console.log("buton -");
                 if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
                     PROCENT_DISTRIBUTIE_MASCA -= INCREMENT_BUTON;
                 }
@@ -1076,10 +1076,7 @@ function interactioneaza(e) {
                     PROCENT_DISTRIBUTIE_ACASA -= INCREMENT_BUTON;
                 }
             }
-
-
         }
-
     }
 }
 
