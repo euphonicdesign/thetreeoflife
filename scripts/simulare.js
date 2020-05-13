@@ -119,9 +119,9 @@ var TUB_CULOARE_FLUX = "#66c2ff";
 
 //retea butoane
 var vector_butoane = [];
-var BUTON_INALTIME = 20;
-var BUTON_LATIME = 30;
-var BUTON_CULOARE_FUNDAL = "#66c2ff";
+var BUTON_INALTIME = jeton_model_diametru;
+var BUTON_LATIME = LUNGIME_REZERVOR / 3;
+var BUTON_CULOARE_FUNDAL = "grey";
 var BUTON_CULOARE_TEXT = "white";
 var TIP_BUTON_PLUS = 0;
 var TIP_BUTON_MINUS = 1;
@@ -281,9 +281,13 @@ function generare_retea_butoane_si_afisaje() {
 
     afisaj1 = new afisaj(this.x_panel, this.y_panel, AFISAJ_VARIABILA_MASCA);
     vector_afisaje.push(afisaj1);
-    console.log(this.identare_verticala);
+
     afisaj2 = new afisaj(this.x_panel, this.y_panel + this.distantare_verticala, AFISAJ_VARIABILA_ACASA);
     vector_afisaje.push(afisaj2);
+
+    buton1 = new buton(this.x_grup_legenda, this.y_panel, TIP_BUTON_PLUS, afisaj1);
+    vector_butoane.push(buton1);
+
 
 }
 
@@ -322,6 +326,57 @@ function afisaj(x,y,afisaj_variabila){
         ctx.font = this.marime_text;
         //ctx.lineWidth = 0.1;
         //ctx.strokeStyle = "black";
+        ctx.fillText(this.valoare, this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
+    }
+
+}
+
+//var BUTON_INALTIME = 20;
+//var BUTON_LATIME = 30;
+//var BUTON_CULOARE_FUNDAL = "#66c2ff";
+//var BUTON_CULOARE_TEXT = "white";
+//var TIP_BUTON_PLUS = 0;
+//var TIP_BUTON_MINUS = 1;
+//var BUTON_VARIABILA_MASCA = 0;
+//var BUTON_VARIABILA_ACASA = 1;
+
+function buton(x,y,tip_buton,afjisaj){
+    this.x = x;
+    this.y = y;
+    this.tip_buton = tip_buton;
+    this.afisaj = afisaj;
+    this.valoare = "+";
+    this.identare_text_verticala = 18;
+    this.identare_text_orizontala = 10;
+    this.marime_text = "16px Arial";
+
+    //constructor
+    if(this.tip_buton == TIP_BUTON_PLUS){
+      this.valoare = "+";
+    }
+    else if(this.tip_buton == TIP_BUTON_MINUS){
+      this.valoare = "-";
+    }
+    //console.log("valoare buton: " + this.valoare);
+
+    this.desenare = function(){
+        ctx = mySuprafataJoc.context;
+
+        //desenare jeton pierdut
+        ctx.fillStyle = BUTON_CULOARE_FUNDAL;
+        ctx.strokeStyle = AFISAJ_CULOARE_MARGINE;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, BUTON_LATIME, BUTON_INALTIME);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = BUTON_CULOARE_TEXT;
+        ctx.font = this.marime_text;
+        //ctx.lineWidth = 0.1;
+        //ctx.strokeStyle = "black";
+        //console.log("valoare buton: " + this.valoare);
         ctx.fillText(this.valoare, this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
     }
 
@@ -913,6 +968,12 @@ function actualizareSuprafataJoc() {
             vector_afisaje[i].desenare();
         }
 
+        //butoane
+        for (let i = 0; i < vector_butoane.length; i++) {
+            //vector_butoane[i].actualizare_valoare();
+            vector_butoane[i].desenare();
+        }
+
         //Zile
         timer += timp_joc/granularitate_timp;
         //console.log(timer);
@@ -968,15 +1029,6 @@ function interactioneaza(e) {
 
     }
 }
-
-/*
-function getMousePos(canvas, evt) {
-    var rect = mySuprafataJoc.canvas.getBoundingClientRect();
-    return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    };
-}*/
 
 function actualizareContor(){
     total_frunze_normale = 0;
@@ -1283,12 +1335,6 @@ function schimbareMetodePreventie(){
 
 function pauzaJoc() {
     pauza_joc = !pauza_joc;
-    //console.log("pauza = " + pauza_joc)
-    /*
-    for(let i=0; i<vector_tuburi.length; i++){
-      vector_tuburi[i].schimbareculoare();
-    }
-    */
 }
 
 function generare_retea_jetoane_v1() {
@@ -1450,8 +1496,6 @@ function schimbareVersiune(){
 
 }
 
-
-
 function setare_versiune_preferata() {
   if(!localStorage.getItem('version')) {
       localStorage.setItem('version', VERSIUNEA_SELECTATA);
@@ -1487,8 +1531,6 @@ function setare_limba_preferata() {
     actualizareLimba();
   }
 }
-
-
 
 function actualizareLimba(){
   //console.log("LIMBA_SELECTATA: " + LIMBA_SELECTATA)
