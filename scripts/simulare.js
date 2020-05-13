@@ -1,4 +1,4 @@
-jeton_model_raza//VERSIUNE
+//VERSIUNE
 var VERSIUNEA_1 = 0;
 var VERSIUNEA_2 = 1;
 var VERSIUNEA_SELECTATA = VERSIUNEA_1;
@@ -86,6 +86,9 @@ var distributieOutcomeFrunza = DISTRIBUTIE_OUTCOME_FRUNZA_FAVORABILA;
 //1 masca - 15% probabilitate
 //2 afara - 80% probabilitate
 var distributieAlegereMetodaPreventie = [0,0, 1,1, 1,1, 2,2, 2,2, 2,2, 2,2, 2,2, 2,2, 2,2];
+var PROCENT_DISTRIBUTIE_MASCA = 0.2;
+var PROCENT_DISTRIBUTIE_ACASA = 0.1;
+var PROCENT_DISTRIBUTIE_AFARA = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_ACASA;
 
 var FACTOR_ACCELERARE_DEBIT = 4;
 var DEBIT_TRANSMITERE_JETON = 0.01 * FACTOR_ACCELERARE_DEBIT;
@@ -109,6 +112,28 @@ var TUB_NORMAL = "tub normal";
 var TUB_CULOARE_GOL = "#bfbfbf";
 var TUB_CULOARE_PLIN = TUB_CULOARE_GOL;
 var TUB_CULOARE_FLUX = "#66c2ff";
+
+//retea butoane
+var vector_butoane = [];
+var BUTON_INALTIME = 20;
+var BUTON_LATIME = 30;
+var BUTON_CULOARE_FUNDAL = "#66c2ff";
+var BUTON_CULOARE_TEXT = "white";
+var TIP_BUTON_PLUS = 0;
+var TIP_BUTON_MINUS = 1;
+var BUTON_VARIABILA_MASCA = 0;
+var BUTON_VARIABILA_ACASA = 1;
+
+//retea afisaje
+var vector_afisaje = [];
+var AFISAJ_INALTIME = 20;
+var AFISAJ_LATIME = 30;
+var AFISAJ_CULOARE_FUNDAL = "white";
+var AFISAJ_CULOARE_TEXT = "#66c2ff";
+var AFISAJ_CULOARE_MARGINE = "#336699";
+var AFISAJ_VARIABILA_MASCA = 0;
+var AFISAJ_VARIABILA_ACASA = 1;
+var AFISAJ_FONT_TEXT = "18px Arial";
 
 //tipuri
 var TIP_DREPTUNGHI = "dreptunghi";
@@ -239,10 +264,64 @@ function startJoc(){
   }else{
       //console.log("versiunea 2 nu are nimic de afisat");
       generare_retea_jetoane_v2();
+      generare_retea_butoane_si_afisaje();
   }
 
   mySuprafataJoc.creare();
 }
+
+function generare_retea_butoane_si_afisaje() {
+    this.identare_orizontala = jeton_model_raza;
+    this.identare_verticala = jeton_model_diametru*2 +10;
+    this.x_panel = x_grup_legenda + this.identare_orizontala;
+    this.y_panel = y_grup_legenda - this.identare_verticala;
+
+    afisaj1 = new afisaj(this.x_panel, this.y_panel, AFISAJ_VARIABILA_MASCA);
+    vector_afisaje.push(afisaj1);
+    afisaj2 = new afisaj(this.x_panel, this.y_panel + 20, AFISAJ_VARIABILA_ACASA);
+    vector_afisaje.push(afisaj2);
+
+}
+
+function afisaj(x,y,afisaj_variabila){
+    this.x = x;
+    this.y = y;
+    this.afisaj_variabila = afisaj_variabila;
+    this.valoare = 0;
+    this.identare_text_verticala = 16;
+    this.identare_text_orizontala = 3;
+
+    this.actualizare_valoare = function() {
+      if(this.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
+        this.valoare = PROCENT_DISTRIBUTIE_MASCA;
+      }
+      else if(this.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
+        this.valoare = PROCENT_DISTRIBUTIE_ACASA;
+      }
+    }
+
+    this.desenare = function(){
+        ctx = mySuprafataJoc.context;
+
+        //desenare jeton pierdut
+        ctx.fillStyle = AFISAJ_CULOARE_FUNDAL;
+        ctx.strokeStyle = AFISAJ_CULOARE_MARGINE;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, AFISAJ_LATIME, AFISAJ_INALTIME);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = AFISAJ_CULOARE_TEXT;
+        ctx.font = AFISAJ_FONT_TEXT;
+        //ctx.lineWidth = 0.1;
+        //ctx.strokeStyle = "black";
+        ctx.fillText(this.valoare, this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
+    }
+
+}
+
 
 function generare_retea_jetoane_v2() {
     distantare_ramuri = 50;
@@ -821,6 +900,12 @@ function actualizareSuprafataJoc() {
             vector_jetoane[i].actualizarestare();
             vector_jetoane[i].umplere();
             vector_jetoane[i].desenare();
+        }
+
+        //afisaje
+        for (let i = 0; i < vector_afisaje.length; i++) {
+            vector_afisaje[i].actualizare_valoare();
+            vector_afisaje[i].desenare();
         }
 
         //Zile
@@ -1493,4 +1578,6 @@ function actualizareParametriiVersiune(){
     TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_RO;
     TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_RO;
   }
+
+  PROCENT_DISTRIBUTIE_AFARA = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_ACASA;
 }
