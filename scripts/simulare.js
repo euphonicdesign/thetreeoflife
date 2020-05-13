@@ -121,8 +121,8 @@ var TUB_CULOARE_FLUX = "#66c2ff";
 var vector_butoane = [];
 var BUTON_INALTIME = jeton_model_diametru;
 var BUTON_LATIME = LUNGIME_REZERVOR / 3;
-var BUTON_CULOARE_FUNDAL = "grey";
-var BUTON_CULOARE_TEXT = "white";
+var BUTON_CULOARE_FUNDAL = "#f2f2f2";
+var BUTON_CULOARE_TEXT = CULOARE_TEXT_LEGENDA;
 var TIP_BUTON_PLUS = 0;
 var TIP_BUTON_MINUS = 1;
 var BUTON_VARIABILA_MASCA = 0;
@@ -279,14 +279,29 @@ function generare_retea_butoane_si_afisaje() {
     this.x_panel = x_grup_legenda + 60;
     this.y_panel = y_grup_legenda - this.identare_verticala;
 
+    //AFISAJ MASCA
     afisaj1 = new afisaj(this.x_panel, this.y_panel, AFISAJ_VARIABILA_MASCA);
     vector_afisaje.push(afisaj1);
 
+    //BUTON -
+    buton1 = new buton(this.x_grup_legenda, this.y_panel, TIP_BUTON_MINUS, afisaj1);
+    vector_butoane.push(buton1);
+
+    //BUTON +
+    buton2 = new buton(this.x_grup_legenda + BUTON_LATIME, this.y_panel, TIP_BUTON_PLUS, afisaj1);
+    vector_butoane.push(buton2);
+
+    //AFISAJ ACASA
     afisaj2 = new afisaj(this.x_panel, this.y_panel + this.distantare_verticala, AFISAJ_VARIABILA_ACASA);
     vector_afisaje.push(afisaj2);
 
-    buton1 = new buton(this.x_grup_legenda, this.y_panel, TIP_BUTON_PLUS, afisaj1);
-    vector_butoane.push(buton1);
+    //BUTON -
+    buton3 = new buton(this.x_grup_legenda, this.y_panel + this.distantare_verticala, TIP_BUTON_MINUS, afisaj2);
+    vector_butoane.push(buton3);
+
+    //BUTON +
+    buton4 = new buton(this.x_grup_legenda + BUTON_LATIME, this.y_panel + this.distantare_verticala, TIP_BUTON_PLUS, afisaj2);
+    vector_butoane.push(buton4);
 
 
 }
@@ -315,7 +330,7 @@ function afisaj(x,y,afisaj_variabila){
         //desenare jeton pierdut
         ctx.fillStyle = AFISAJ_CULOARE_FUNDAL;
         ctx.strokeStyle = AFISAJ_CULOARE_MARGINE;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.rect(this.x, this.y, AFISAJ_LATIME, AFISAJ_INALTIME);
         ctx.closePath();
@@ -331,15 +346,6 @@ function afisaj(x,y,afisaj_variabila){
 
 }
 
-//var BUTON_INALTIME = 20;
-//var BUTON_LATIME = 30;
-//var BUTON_CULOARE_FUNDAL = "#66c2ff";
-//var BUTON_CULOARE_TEXT = "white";
-//var TIP_BUTON_PLUS = 0;
-//var TIP_BUTON_MINUS = 1;
-//var BUTON_VARIABILA_MASCA = 0;
-//var BUTON_VARIABILA_ACASA = 1;
-
 function buton(x,y,tip_buton,afjisaj){
     this.x = x;
     this.y = y;
@@ -348,7 +354,7 @@ function buton(x,y,tip_buton,afjisaj){
     this.valoare = "+";
     this.identare_text_verticala = 18;
     this.identare_text_orizontala = 10;
-    this.marime_text = "16px Arial";
+    this.marime_text = "17px Arial";
 
     //constructor
     if(this.tip_buton == TIP_BUTON_PLUS){
@@ -365,7 +371,7 @@ function buton(x,y,tip_buton,afjisaj){
         //desenare jeton pierdut
         ctx.fillStyle = BUTON_CULOARE_FUNDAL;
         ctx.strokeStyle = AFISAJ_CULOARE_MARGINE;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.rect(this.x, this.y, BUTON_LATIME, BUTON_INALTIME);
         ctx.closePath();
@@ -377,7 +383,13 @@ function buton(x,y,tip_buton,afjisaj){
         //ctx.lineWidth = 0.1;
         //ctx.strokeStyle = "black";
         //console.log("valoare buton: " + this.valoare);
-        ctx.fillText(this.valoare, this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
+        if(this.valoare == "-"){
+            //pt caracterul - e nevoie de mai multa identare
+            ctx.fillText(this.valoare, this.x + this.identare_text_orizontala +3, this.y-1 + this.identare_text_verticala);
+        }
+        else{
+            ctx.fillText(this.valoare, this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
+        }
     }
 
 }
