@@ -30,6 +30,10 @@ var y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP
 var CULOARE_TEXT_LEGENDA = "#002e4d";
 var CULOARE_TEXT_PROTECTII = "grey";
 
+//matrice jetoane
+var jeton_model_diametru = 25;
+var jeton_model_raza = jeton_model_diametru / 2;
+
 //temporizare
 var accelerare_timp = 5;
 var timp_joc = 200 / accelerare_timp;
@@ -126,22 +130,20 @@ var BUTON_VARIABILA_ACASA = 1;
 
 //retea afisaje
 var vector_afisaje = [];
-var AFISAJ_INALTIME = 20;
-var AFISAJ_LATIME = 30;
+var AFISAJ_INALTIME = jeton_model_diametru;
+var AFISAJ_LATIME = LUNGIME_REZERVOR / 3;
 var AFISAJ_CULOARE_FUNDAL = "white";
-var AFISAJ_CULOARE_TEXT = "#66c2ff";
-var AFISAJ_CULOARE_MARGINE = "#336699";
+var AFISAJ_CULOARE_TEXT = CULOARE_TEXT_LEGENDA;
+var AFISAJ_CULOARE_MARGINE = "#bfbfbf";
 var AFISAJ_VARIABILA_MASCA = 0;
 var AFISAJ_VARIABILA_ACASA = 1;
-var AFISAJ_FONT_TEXT = "18px Arial";
+//var AFISAJ_FONT_TEXT = "18px Arial";
 
 //tipuri
 var TIP_DREPTUNGHI = "dreptunghi";
 var TIP_CERC = "cerc";
 
-//matrice jetoane
-var jeton_model_diametru = 25;
-var jeton_model_raza = jeton_model_diametru / 2;
+//jetoane
 
 var CULOARE_JETON = "#d9d9d9";
 var CULOARE_MARGINE_JETON = "#336699";
@@ -272,13 +274,15 @@ function startJoc(){
 
 function generare_retea_butoane_si_afisaje() {
     this.identare_orizontala = jeton_model_raza;
-    this.identare_verticala = jeton_model_diametru*2 +10;
-    this.x_panel = x_grup_legenda + this.identare_orizontala;
+    this.identare_verticala = jeton_model_diametru*2 +20;
+    this.distantare_verticala = AFISAJ_INALTIME +1;
+    this.x_panel = x_grup_legenda + 60;
     this.y_panel = y_grup_legenda - this.identare_verticala;
 
     afisaj1 = new afisaj(this.x_panel, this.y_panel, AFISAJ_VARIABILA_MASCA);
     vector_afisaje.push(afisaj1);
-    afisaj2 = new afisaj(this.x_panel, this.y_panel + 20, AFISAJ_VARIABILA_ACASA);
+    console.log(this.identare_verticala);
+    afisaj2 = new afisaj(this.x_panel, this.y_panel + this.distantare_verticala, AFISAJ_VARIABILA_ACASA);
     vector_afisaje.push(afisaj2);
 
 }
@@ -288,8 +292,9 @@ function afisaj(x,y,afisaj_variabila){
     this.y = y;
     this.afisaj_variabila = afisaj_variabila;
     this.valoare = 0;
-    this.identare_text_verticala = 16;
-    this.identare_text_orizontala = 3;
+    this.identare_text_verticala = 18;
+    this.identare_text_orizontala = 4;
+    this.marime_text = "16px Arial";
 
     this.actualizare_valoare = function() {
       if(this.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
@@ -314,7 +319,7 @@ function afisaj(x,y,afisaj_variabila){
         ctx.stroke();
 
         ctx.fillStyle = AFISAJ_CULOARE_TEXT;
-        ctx.font = AFISAJ_FONT_TEXT;
+        ctx.font = this.marime_text;
         //ctx.lineWidth = 0.1;
         //ctx.strokeStyle = "black";
         ctx.fillText(this.valoare, this.x + this.identare_text_orizontala, this.y + this.identare_text_verticala);
