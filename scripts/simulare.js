@@ -190,10 +190,23 @@ var TEXT_LEGENDA_FRUNZE_VINDECATE_RO = "frunze vindecate";
 var TEXT_LEGENDA_FRUNZE_VINDECATE_EN = "healed";
 var TEXT_LEGENDA_FRUNZE_PIERDUTE_RO = "frunze pierdute";
 var TEXT_LEGENDA_FRUNZE_PIERDUTE_EN = "lost";
-var TEXT_LEGENDA_MASCA_RO = "strat protector";
-var TEXT_LEGENDA_MASCA_EN = "cover layer";
-var TEXT_LEGENDA_ACASA_RO = "strat acasa";
-var TEXT_LEGENDA_ACASA_EN = "home layer";
+
+
+
+var TEXT_LEGENDA_MASCA_RO_V1 = "strat protector";
+var TEXT_LEGENDA_MASCA_EN_V1 = "cover layer";
+var TEXT_LEGENDA_ACASA_RO_V1 = "strat acasa";
+var TEXT_LEGENDA_ACASA_EN_V1 = "home layer";
+
+var TEXT_LEGENDA_MASCA_RO_V2 = "masca";
+var TEXT_LEGENDA_MASCA_EN_V2 = "mask";
+var TEXT_LEGENDA_ACASA_RO_V2 = "acasa";
+var TEXT_LEGENDA_ACASA_EN_V2 = "home";
+
+var TEXT_LEGENDA_MASCA_RO = TEXT_LEGENDA_MASCA_RO_V1;
+var TEXT_LEGENDA_MASCA_EN = TEXT_LEGENDA_MASCA_EN_V1;
+var TEXT_LEGENDA_ACASA_RO = TEXT_LEGENDA_ACASA_RO_V1;
+var TEXT_LEGENDA_ACASA_EN = TEXT_LEGENDA_ACASA_EN_V1;
 
 var TEXT_TITLU = TEXT_TITLU_EN;
 var TEXT_ZILE_TRECUTE = TEXT_ZILE_TRECUTE_EN;
@@ -1087,32 +1100,7 @@ function desenareContor2(){
     ctx.closePath();
     ctx.fill();
     //ctx.stroke();
-/*
-    //desenare jeton masca
-    ctx.fillStyle = CULOARE_MASCA;
-    ctx.strokeStyle = CULOARE_MARGINE_JETON;
-    //ctx.strokeStyle = this.culoare_stare_frunza;
-    ctx.lineWidth = grosime_margine_jeton;
-    ctx.beginPath();
 
-    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda + 120, jeton_model_raza, 0, Math.PI*2, false);
-    ctx.closePath();
-    ctx.fill();
-    //ctx.stroke();
-
-    //desenare jeton acasa
-    ctx.fillStyle = CULOARE_ACASA;
-    ctx.strokeStyle = CULOARE_MARGINE_JETON;
-    //ctx.strokeStyle = this.culoare_stare_frunza;
-    ctx.lineWidth = grosime_margine_jeton;
-    ctx.beginPath();
-
-    //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
-    ctx.arc(x_jeton_legenda, y_jeton_legenda + 150, jeton_model_raza, 0, Math.PI*2, false);
-    ctx.closePath();
-    ctx.fill();
-    //ctx.stroke();*/
 
 
     //desenare text
@@ -1125,16 +1113,53 @@ function desenareContor2(){
     ctx.fillText(total_frunze_vindecate + " " + TEXT_LEGENDA_FRUNZE_VINDECATE , x_text_legenda, y_text_legenda + 60);
     ctx.fillText(total_frunze_pierdute + " " + TEXT_LEGENDA_FRUNZE_PIERDUTE , x_text_legenda, y_text_legenda + 90);
 
-/*
-    ctx.fillStyle = CULOARE_TEXT_PROTECTII;
-    ctx.fillText(TEXT_LEGENDA_MASCA + " (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , x_text_legenda, y_text_legenda + 120);
-    ctx.fillText(TEXT_LEGENDA_ACASA + " (100%)" , x_text_legenda, y_text_legenda + 150);
-    //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);*/
-
 }
 
 function desenarePanelConfigurareProtectii(){
+      this.identare_orizontala = jeton_model_raza;
+      this.identare_verticala = jeton_model_diametru*2 +10;
+      this.x_panel = x_jeton_legenda;//x_grup_legenda + this.identare_orizontala;
+      this.y_panel = y_grup_legenda - this.identare_verticala;
+      this.x_text = this.x_panel + jeton_model_diametru;
+      this.y_text = this.y_panel;// + jeton_model_diametru;
+      this.identare_verticala_text = 5;
 
+      //desenare jeton masca
+      ctx.fillStyle = CULOARE_MASCA;
+      ctx.strokeStyle = CULOARE_MARGINE_JETON;
+      //ctx.strokeStyle = this.culoare_stare_frunza;
+      ctx.lineWidth = grosime_margine_jeton;
+      ctx.beginPath();
+
+      //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+      ctx.arc(this.x_panel, this.y_panel , jeton_model_raza, 0, Math.PI*2, false);
+      ctx.closePath();
+      ctx.fill();
+      //ctx.stroke();
+
+      //desenare jeton acasa
+      ctx.fillStyle = CULOARE_ACASA;
+      ctx.strokeStyle = CULOARE_MARGINE_JETON;
+      //ctx.strokeStyle = this.culoare_stare_frunza;
+      ctx.lineWidth = grosime_margine_jeton;
+      ctx.beginPath();
+
+      //(jeton_model_width, jeton_model_diametru, CULOARE_JETON, x_jeton, y_jeton, tip_jeton);
+      ctx.arc(this.x_panel, this.y_panel + 30, jeton_model_raza, 0, Math.PI*2, false);
+      ctx.closePath();
+      ctx.fill();
+      //ctx.stroke();
+
+
+      //desenare text
+      ctx.fillStyle = CULOARE_TEXT_LEGENDA;
+      //ctx.font = FONT_TEXT_LEGENDA;
+      ctx.font = "18px Arial";
+
+      ctx.fillStyle = CULOARE_TEXT_PROTECTII;
+      ctx.fillText(TEXT_LEGENDA_MASCA + " (" + (1 - RATA_TRANSMITERE_MASCA) * 100 + "%)" , this.x_text, this.y_text + this.identare_verticala_text);
+      ctx.fillText(TEXT_LEGENDA_ACASA + " (100%)" , this.x_text, this.y_text + this.identare_verticala_text + 30);
+      //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);
 }
 
 function schimbareMetodePreventie(){
@@ -1421,6 +1446,12 @@ function actualizareParametriiVersiune(){
       INALTIME_REZERVOR = 174;
       y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
       x_grup_legenda = 15;
+
+      TEXT_LEGENDA_MASCA_RO = TEXT_LEGENDA_MASCA_RO_V1;
+      TEXT_LEGENDA_MASCA_EN = TEXT_LEGENDA_MASCA_EN_V1;
+      TEXT_LEGENDA_ACASA_RO = TEXT_LEGENDA_ACASA_RO_V1;
+      TEXT_LEGENDA_ACASA_EN = TEXT_LEGENDA_ACASA_EN_V1;
+
   }
   else{
       //V2
@@ -1434,6 +1465,12 @@ function actualizareParametriiVersiune(){
       //x_grup_legenda = 850;
       y_grup_legenda = CANVAS_HEIGHT - INALTIME_REZERVOR - IDENTARE_VERTICALA_GRUP_LEGENDA;
       x_grup_legenda = 15;
+
+      TEXT_LEGENDA_MASCA_RO = TEXT_LEGENDA_MASCA_RO_V2;
+      TEXT_LEGENDA_MASCA_EN = TEXT_LEGENDA_MASCA_EN_V2;
+      TEXT_LEGENDA_ACASA_RO = TEXT_LEGENDA_ACASA_RO_V2;
+      TEXT_LEGENDA_ACASA_EN = TEXT_LEGENDA_ACASA_EN_V2;
+
   }
 
   //actualizare variabile dependente
@@ -1447,4 +1484,13 @@ function actualizareParametriiVersiune(){
 
   x_jeton_legenda = xRezervor + LUNGIME_REZERVOR + distantareOrizontalaRezervorLegenda;
   x_text_legenda = x_jeton_legenda + jeton_model_diametru;
+
+  if (LIMBA_SELECTATA == LIMBA_ENGLEZA){
+      TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_EN;
+      TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_EN;
+  }
+  else{
+    TEXT_LEGENDA_MASCA = TEXT_LEGENDA_MASCA_RO;
+    TEXT_LEGENDA_ACASA = TEXT_LEGENDA_ACASA_RO;
+  }
 }
