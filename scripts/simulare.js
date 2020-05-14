@@ -1452,7 +1452,12 @@ function schimbareMetodePreventie(){
                       //Math.floor(num * 100) / 100
 
                       //console.log("metoda preventie: " + weightedRand2({METODA_PREVENTIE_ACASA:0.8, METODA_PREVENTIE_MASCA:0.1, METODA_PREVENTIE_AFARA:0.1})); // random in distribution...
-                      console.log(weightedRand2({0:proc_acasa, 1:proc_masca, 2:proc_afara})); // random in distribution...
+                      preventie_acasa = METODA_PREVENTIE_ACASA;
+                      preventie_masca = METODA_PREVENTIE_MASCA;
+                      preventie_afara = METODA_PREVENTIE_AFARA;
+
+                      met_prev_aleatoare = weightedRand2({0:proc_acasa, 1:proc_masca, 2:proc_afara});
+                      console.log(met_prev_aleatoare);
                     }
 
                     //PROCENT_DISTRIBUTIE_ACASA
