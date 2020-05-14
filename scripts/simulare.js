@@ -660,6 +660,9 @@ var mySuprafataJoc = {
       this.canvas.addEventListener("mousedown", function(e){ e.preventDefault(); }, false);
       //this.canvas.addEventListener("dblclick", doSomething, false);
 
+      //dezactiveaza dublu click - selectie text html
+      this.canvas.addEventListener("mousedown", function(e){ e.preventDefault(); }, false);
+
       document.body.insertBefore(this.canvas, document.body.childNodes[3]);
       this.interval = setInterval(actualizareSuprafataJoc, timp_joc);
 
