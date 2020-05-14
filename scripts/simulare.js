@@ -1417,8 +1417,45 @@ function schimbareMetodePreventie(){
                 //console.log("zi = " + zi);
                 for(let i=1; i<vector_jetoane.length; i++){
                     //nr_stari = 3;
-                    var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
-                    metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
+                    //var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
+                    //metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
+
+                    //final int ran = myRandom.nextInt(100);
+                    //if (ran > 50) { return 3; }
+                    //else if (ran > 20) { return 2; }
+                    //else { return 1; }
+
+                    //probabilitate_aleatoare = Math.floor(Math.random()*100);
+
+                    if (i==2){
+                      //console.log("probabilitate aleatoare pt jeton 3: " + probabilitate_aleatoare);
+
+
+
+                      console.log("Proc distrib acasa: " + PROCENT_DISTRIBUTIE_ACASA);
+                      console.log("Proc distrib masca: " + PROCENT_DISTRIBUTIE_MASCA);
+                      console.log("Proc distrib afara: " + PROCENT_DISTRIBUTIE_AFARA);
+
+                      //Limitare valori la 1 decimala
+                      //proc_acasa = Math.floor(PROCENT_DISTRIBUTIE_ACASA * 10) / 10;
+                      //proc_masca = Math.floor(PROCENT_DISTRIBUTIE_MASCA * 10) / 10;
+                      //proc_afara = Math.floor(PROCENT_DISTRIBUTIE_AFARA * 10) / 10;
+
+                      proc_acasa = Math.floor(PROCENT_DISTRIBUTIE_ACASA * 100) / 100;
+                      proc_masca = Math.floor(PROCENT_DISTRIBUTIE_MASCA * 100) / 100;
+                      proc_afara = Math.floor(PROCENT_DISTRIBUTIE_AFARA * 100) / 100;
+
+                      console.log("Proc acasa: " + proc_acasa);
+                      console.log("Proc masca: " + proc_masca);
+                      console.log("Proc afara: " + proc_afara);
+
+                      //Math.floor(num * 100) / 100
+
+                      //console.log("metoda preventie: " + weightedRand2({METODA_PREVENTIE_ACASA:0.8, METODA_PREVENTIE_MASCA:0.1, METODA_PREVENTIE_AFARA:0.1})); // random in distribution...
+                      console.log(weightedRand2({0:proc_acasa, 1:proc_masca, 2:proc_afara})); // random in distribution...
+                    }
+
+                    //PROCENT_DISTRIBUTIE_ACASA
 
                     //metoda_preventie_random = Math.floor(Math.random() * Math.floor(nr_stari));
                     //console.log("i = " + i + " stare: " + metoda_preventie_random);
@@ -1437,6 +1474,15 @@ function schimbareMetodePreventie(){
         }
     }
 }
+
+function weightedRand2(spec) {
+  var i, sum=0, r=Math.random();
+  for (i in spec) {
+    sum += spec[i];
+    if (r <= sum) return i;
+  }
+}
+
 
 function pauzaJoc() {
     pauza_joc = !pauza_joc;
