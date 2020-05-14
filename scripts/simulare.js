@@ -48,8 +48,8 @@ var metoda_preventie_schimbata = true;
 
 //retea jetoane
 var adancime_retea = 16; //straturi
-var MAXIM_FRUNZE = 60;
-var FACTOR_CAPACITATE_REZERVOR = 0.6;
+var MAXIM_FRUNZE = 60; // v1, 150 v2
+var FACTOR_CAPACITATE_REZERVOR = 0.6; //v1, 0.3 v2
 var nr_straturi_per_faza = 4; //latime retea
 var vector_jetoane = [];
 var distantare_x_jetoane = 2;
@@ -1152,6 +1152,7 @@ function actualizareContor(){
 }
 
 function desenareRezervor(){
+    //console.log("factor capacitate " + FACTOR_CAPACITATE_REZERVOR);
     ctx = mySuprafataJoc.context;
     ctx.fillStyle = CULOARE_REZERVOR;
     //ctx.strokeStyle = this.culoare_stare_frunza;
@@ -1161,6 +1162,7 @@ function desenareRezervor(){
     ctx.fillRect(xRezervor, yRezervor, LUNGIME_REZERVOR, INALTIME_REZERVOR);
 
     //apa rezervor
+    //dimensionare rezervor in functie de capacitatea sistemului (procent din populatie nr total frunze)
     if (total_frunze_penetrate <= MAXIM_FRUNZE * FACTOR_CAPACITATE_REZERVOR){
         nivelApaRezervor = total_frunze_penetrate * INALTIME_REZERVOR / (MAXIM_FRUNZE * FACTOR_CAPACITATE_REZERVOR);
         ctx.fillStyle = CULOARE_APA_REZERVOR;
@@ -1727,7 +1729,7 @@ function actualizareParametriiVersiune(){
       TEXT_LEGENDA_ACASA_EN = TEXT_LEGENDA_ACASA_EN_V2;
 
       MAXIM_FRUNZE = 150;
-      FACTOR_CAPACITATE_REZERVOR = 0.6;
+      FACTOR_CAPACITATE_REZERVOR = 0.3;
 
   }
 
