@@ -1420,52 +1420,17 @@ function schimbareMetodePreventie(){
                     //var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
                     //metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
 
-                    //final int ran = myRandom.nextInt(100);
-                    //if (ran > 50) { return 3; }
-                    //else if (ran > 20) { return 2; }
-                    //else { return 1; }
+                    //Limitare valori la 1 decimala
+                    proc_acasa = Math.floor(PROCENT_DISTRIBUTIE_ACASA * 100) / 100;
+                    proc_masca = Math.floor(PROCENT_DISTRIBUTIE_MASCA * 100) / 100;
+                    proc_afara = Math.floor(PROCENT_DISTRIBUTIE_AFARA * 100) / 100;
 
-                    //probabilitate_aleatoare = Math.floor(Math.random()*100);
+                    met_prev_aleatoare = weightedRand2({0:proc_acasa, 1:proc_masca, 2:proc_afara});
 
-                    if (i==2){
-                      //console.log("probabilitate aleatoare pt jeton 3: " + probabilitate_aleatoare);
-
-
-
-                      console.log("Proc distrib acasa: " + PROCENT_DISTRIBUTIE_ACASA);
-                      console.log("Proc distrib masca: " + PROCENT_DISTRIBUTIE_MASCA);
-                      console.log("Proc distrib afara: " + PROCENT_DISTRIBUTIE_AFARA);
-
-                      //Limitare valori la 1 decimala
-                      //proc_acasa = Math.floor(PROCENT_DISTRIBUTIE_ACASA * 10) / 10;
-                      //proc_masca = Math.floor(PROCENT_DISTRIBUTIE_MASCA * 10) / 10;
-                      //proc_afara = Math.floor(PROCENT_DISTRIBUTIE_AFARA * 10) / 10;
-
-                      proc_acasa = Math.floor(PROCENT_DISTRIBUTIE_ACASA * 100) / 100;
-                      proc_masca = Math.floor(PROCENT_DISTRIBUTIE_MASCA * 100) / 100;
-                      proc_afara = Math.floor(PROCENT_DISTRIBUTIE_AFARA * 100) / 100;
-
-                      console.log("Proc acasa: " + proc_acasa);
-                      console.log("Proc masca: " + proc_masca);
-                      console.log("Proc afara: " + proc_afara);
-
-                      //Math.floor(num * 100) / 100
-
-                      //console.log("metoda preventie: " + weightedRand2({METODA_PREVENTIE_ACASA:0.8, METODA_PREVENTIE_MASCA:0.1, METODA_PREVENTIE_AFARA:0.1})); // random in distribution...
-                      preventie_acasa = METODA_PREVENTIE_ACASA;
-                      preventie_masca = METODA_PREVENTIE_MASCA;
-                      preventie_afara = METODA_PREVENTIE_AFARA;
-
-                      met_prev_aleatoare = weightedRand2({0:proc_acasa, 1:proc_masca, 2:proc_afara});
-                      console.log(met_prev_aleatoare);
+                    if(vector_jetoane[i].stare_frunza != FRUNZA_VINDECATA && vector_jetoane[i].stare_frunza != FRUNZA_PIERDUTA){
+                        //vector_jetoane[i].metoda_preventie = metoda_preventie_random;
+                        vector_jetoane[i].metoda_preventie = met_prev_aleatoare;
                     }
-
-                    //PROCENT_DISTRIBUTIE_ACASA
-
-                    //metoda_preventie_random = Math.floor(Math.random() * Math.floor(nr_stari));
-                    //console.log("i = " + i + " stare: " + metoda_preventie_random);
-                    if(vector_jetoane[i].stare_frunza != FRUNZA_VINDECATA && vector_jetoane[i].stare_frunza != FRUNZA_PIERDUTA)
-                        vector_jetoane[i].metoda_preventie = metoda_preventie_random;
                     else {
                         //daca frunza este vindecata sau pierduta scot metodele de preventie
                         vector_jetoane[i].metoda_preventie = METODA_PREVENTIE_AFARA;
