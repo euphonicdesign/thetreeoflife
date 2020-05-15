@@ -90,9 +90,16 @@ var distributieOutcomeFrunza = DISTRIBUTIE_OUTCOME_FRUNZA_FAVORABILA;
 //1 masca - 15% probabilitate
 //2 afara - 80% probabilitate
 var distributieAlegereMetodaPreventie = [0,0, 1,1, 1,1, 2,2, 2,2, 2,2, 2,2, 2,2, 2,2, 2,2];
+
 var PROCENT_DISTRIBUTIE_MASCA = 0.4;
 var PROCENT_DISTRIBUTIE_ACASA = 0.2;
 var PROCENT_DISTRIBUTIE_AFARA = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_ACASA;
+
+//distributie metoda protectie de start
+var PROCENT_DISTRIBUTIE_MASCA_DE_START = 0.1;
+var PROCENT_DISTRIBUTIE_ACASA_DE_START = 0.1;
+var PROCENT_DISTRIBUTIE_AFARA_DE_START = 1 - PROCENT_DISTRIBUTIE_MASCA_DE_START - PROCENT_DISTRIBUTIE_ACASA_DE_START;
+
 
 var TIP_PROTECTIE_MASCA = 0;
 var TIP_PROTECTIE_ACASA = 1;
@@ -269,10 +276,12 @@ function startJoc(){
   if(VERSIUNEA_SELECTATA == VERSIUNEA_1){
       generare_retea_jetoane_v1();
       generare_retea_tuburi_v1();
+      asignare_metoda_preventie_de_start();
       setare_conditii_initiale_v1();
   }else{
       //console.log("versiunea 2 nu are nimic de afisat");
       generare_retea_jetoane_v2();
+      asignare_metoda_preventie_de_start();
       generare_retea_butoane_si_afisaje();
   }
 
@@ -502,14 +511,30 @@ function generare_retea_jetoane_v2() {
     myTub = new tub(tufas4.vector_jetoane[14], tufaj3.vector_jetoane[0], TUB_CULOARE_GOL, TUB_NORMAL);
     vector_tuburi.push(myTub);
 
+}
 
+function asignare_metoda_preventie_de_start(){
     //asignare metoda preventie
+    /*
     for(let i=1; i<vector_jetoane.length; i++){
         var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
         metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
         vector_jetoane[i].metoda_preventie = metoda_preventie_random;
-    }
+    }*/
 
+    for(let i=3; i<vector_jetoane.length; i++){
+        //var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
+        //metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
+
+        proc_acasa = Math.floor(PROCENT_DISTRIBUTIE_ACASA_DE_START * 100) / 100;
+        proc_masca = Math.floor(PROCENT_DISTRIBUTIE_MASCA_DE_START * 100) / 100;
+        proc_afara = Math.floor(PROCENT_DISTRIBUTIE_AFARA_DE_START * 100) / 100;
+
+        met_prev_aleatoare = weightedRand2({0:proc_acasa, 1:proc_masca, 2:proc_afara});
+
+        //vector_jetoane[i].metoda_preventie = metoda_preventie_random;
+        vector_jetoane[i].metoda_preventie = met_prev_aleatoare;
+    }
 }
 
 function tufaJetoane(x_start, y_start, nr_straturi, tip_expandare){
@@ -1566,21 +1591,8 @@ function setare_conditii_initiale_v1() {
       vector_tuburi.push(myTub);
 
       //vector_tuburi[43].jeton_intrare = vector_jetoane[7];
-
     }
-    for(let i=1; i<vector_jetoane.length; i++){
-        //var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
-        //metoda_preventie_random = distributieAlegereMetodaPreventie[idx];
 
-        proc_acasa = Math.floor(PROCENT_DISTRIBUTIE_ACASA * 100) / 100;
-        proc_masca = Math.floor(PROCENT_DISTRIBUTIE_MASCA * 100) / 100;
-        proc_afara = Math.floor(PROCENT_DISTRIBUTIE_AFARA * 100) / 100;
-
-        met_prev_aleatoare = weightedRand2({0:proc_acasa, 1:proc_masca, 2:proc_afara});
-
-        //vector_jetoane[i].metoda_preventie = metoda_preventie_random;
-        vector_jetoane[i].metoda_preventie = met_prev_aleatoare;
-    }
 }
 
 function trimiteComenziJoc(e){
