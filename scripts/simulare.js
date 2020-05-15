@@ -92,7 +92,7 @@ var distributieOutcomeFrunza = DISTRIBUTIE_OUTCOME_FRUNZA_FAVORABILA;
 var distributieAlegereMetodaPreventie = [0,0, 1,1, 1,1, 2,2, 2,2, 2,2, 2,2, 2,2, 2,2, 2,2];
 
 var PROCENT_DISTRIBUTIE_MASCA = 0.4;
-var PROCENT_DISTRIBUTIE_ACASA = 0.2;
+var PROCENT_DISTRIBUTIE_ACASA = 0.1;
 var PROCENT_DISTRIBUTIE_AFARA = 1 - PROCENT_DISTRIBUTIE_MASCA - PROCENT_DISTRIBUTIE_ACASA;
 
 //distributie metoda protectie de start
