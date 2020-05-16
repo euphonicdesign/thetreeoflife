@@ -281,6 +281,7 @@ function restart(){
 function startJoc(){
   setare_limba_preferata();
   setare_versiune_preferata();
+  setare_procente_protectii_preferate();
 
   if(VERSIUNEA_SELECTATA == VERSIUNEA_1){
       generare_retea_jetoane_v1();
@@ -1701,6 +1702,44 @@ function setare_versiune_preferata() {
     VERSIUNEA_SELECTATA = localStorage.getItem('version');
   }
   actualizareParametriiVersiune();
+}
+
+function setare_procente_protectii_preferate(){
+    if(VERSIUNEA_SELECTATA == VERSIUNEA_2){
+        if(!localStorage.getItem('mask_percentage_v2')) {
+            localStorage.setItem('mask_percentage_v2', PROCENT_DISTRIBUTIE_MASCA_V2);
+        } else {
+          PROCENT_DISTRIBUTIE_MASCA_V2 = parseFloat(localStorage.getItem('mask_percentage_v2'));
+        }
+
+        if(!localStorage.getItem('home_percentage_v2')) {
+            localStorage.setItem('home_percentage_v2', PROCENT_DISTRIBUTIE_ACASA_V2);
+        } else {
+          PROCENT_DISTRIBUTIE_ACASA_V2 = parseFloat(localStorage.getItem('home_percentage_v2'));
+        }
+
+        //verificare date corecte, altfel solutie standard
+        procent_total = PROCENT_DISTRIBUTIE_MASCA_V2 + PROCENT_DISTRIBUTIE_ACASA_V2;
+        console.log("procent total: " + procent_total);
+        console.log("procent masca v2: " + PROCENT_DISTRIBUTIE_MASCA_V2);
+        console.log("procent afara v2: " + PROCENT_DISTRIBUTIE_ACASA_V2);
+
+        //asignare date implicite daca datele salvate nu sunt coerente
+        if(procent_total > 1){
+            console.log("Asignare date implicite");
+            PROCENT_DISTRIBUTIE_MASCA_V2 = PROCENT_DISTRIBUTIE_MASCA;
+            PROCENT_DISTRIBUTIE_ACASA_V2 = PROCENT_DISTRIBUTIE_ACASA;
+        }
+
+        //setare procente conform datelor salvate
+        PROCENT_DISTRIBUTIE_MASCA = PROCENT_DISTRIBUTIE_MASCA_V2;
+        PROCENT_DISTRIBUTIE_ACASA = PROCENT_DISTRIBUTIE_ACASA_V2;
+        PROCENT_DISTRIBUTIE_AFARA = 1 - PROCENT_DISTRIBUTIE_MASCA_V2 - PROCENT_DISTRIBUTIE_ACASA_V2;
+        console.log("masca: " + PROCENT_DISTRIBUTIE_MASCA);
+        console.log("acasa: " + PROCENT_DISTRIBUTIE_ACASA);
+        console.log("afara: " + PROCENT_DISTRIBUTIE_AFARA);
+    }
+
 }
 
 function selectieLimbaEngleza(){
