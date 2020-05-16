@@ -147,6 +147,9 @@ var vector_afisaje = [];
 var AFISAJ_INALTIME = jeton_model_diametru;
 var AFISAJ_LATIME = LUNGIME_REZERVOR / 3;
 var AFISAJ_CULOARE_FUNDAL = "white";
+var AFISAJ_CULOARE_FUNDAL_NESCHIMBAT_RECENT = AFISAJ_CULOARE_FUNDAL;
+var AFISAJ_CULOARE_FUNDAL_SCHIMBAT_RECENT = "#79d2a6";
+
 var AFISAJ_CULOARE_TEXT = CULOARE_TEXT_LEGENDA;
 var AFISAJ_CULOARE_MARGINE = "#bfbfbf";
 var AFISAJ_VARIABILA_MASCA = 0;
@@ -331,6 +334,10 @@ function afisaj(x,y,afisaj_variabila){
     this.identare_text_verticala = 18;
     this.identare_text_orizontala = 4;
     this.marime_text = "16px Arial";
+    this.schimbat_recent = false;
+    this.start_timer = false;
+    this.culoare_schimbata = false;
+    this.culoare_fundal = AFISAJ_CULOARE_FUNDAL;
 
     this.actualizare_valoare = function() {
       if(this.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
@@ -339,13 +346,36 @@ function afisaj(x,y,afisaj_variabila){
       else if(this.afisaj_variabila == AFISAJ_VARIABILA_ACASA){
         this.valoare = PROCENT_DISTRIBUTIE_ACASA;
       }
+
+      //daca unul din butoanele asociate acestui afisas a fost apasat si a
+      //schimbat recent starea
+      if(this.schimbat_recent == true){
+          //schimba culoarea daca nu a trecut perioada de schimbare metoda protectie
+          //(start_timer = true)
+          //culoarea se schimba o singura data in acest interval
+          if(this.start_timer == true && this.culoare_schimbata == false){
+              this.culoare_fundal = AFISAJ_CULOARE_FUNDAL_SCHIMBAT_RECENT;
+              this.culoare_schimbata = true;
+          }
+
+          //verfica daca timerul a expirat
+          //timerul expira cand trece perioada de schimbare metoda protectie
+          //si daca da readus afisaj la starea intiala
+          if(this.start_timer == false){
+              this.culoare_fundal = AFISAJ_CULOARE_FUNDAL_NESCHIMBAT_RECENT;
+              this.schimbat_recent = false;
+              this.culoare_schimbata = false;
+          }
+
+      }
+
     }
 
     this.desenare = function(){
         ctx = mySuprafataJoc.context;
 
         //desenare jeton pierdut
-        ctx.fillStyle = AFISAJ_CULOARE_FUNDAL;
+        ctx.fillStyle = this.culoare_fundal;
         ctx.strokeStyle = AFISAJ_CULOARE_MARGINE;
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -1044,7 +1074,7 @@ function actualizareSuprafataJoc() {
         desenareRezervor();
 
         //Schimbare metode de preventie
-        schimbareMetodePreventie();
+        schimbareMetodePreventieSiCuloariAfisaje();
 
 
   }
@@ -1065,6 +1095,7 @@ function interactioneaza(e) {
 
     //console.log("x relativ: " + mouseX + " y relativ: " + mouseY);
 
+    //Jetoane
     for(let i=0; i<vector_jetoane.length; i++){
         distanta_click_x = mouseX - vector_jetoane[i].x;
         distanta_click_y = mouseY - vector_jetoane[i].y;
@@ -1080,6 +1111,7 @@ function interactioneaza(e) {
         }
     }
 
+    //Butoane Consola Comanda
     for(let i=0; i<vector_butoane.length; i++){
         distanta_click_x = mouseX - vector_butoane[i].mijloc_x;
         distanta_click_y = mouseY - vector_butoane[i].mijloc_y;
@@ -1087,10 +1119,18 @@ function interactioneaza(e) {
         //distanta_click = Math.pow(distanta_click_x,2) + Math.pow(distanta_click_y,2);
         margine_x = BUTON_LATIME / 2;
         margine_y = BUTON_INALTIME / 2;
+
+        //daca butonul a fost apasat
         if(Math.abs(distanta_click_x) < margine_x && Math.abs(distanta_click_y) < margine_y){
+
             //console.log("vector buton " + i);
             //console.log("distanta click x: " + distanta_click_x);
             //console.log("distanta click y: " + distanta_click_y);
+
+            //daca butonul a fost apasat -> schimba starea afisajului asociat
+            vector_butoane[i].afisaj.schimbat_recent = true;
+            vector_butoane[i].afisaj.start_timer = true;
+
             if (vector_butoane[i].tip_buton == TIP_BUTON_PLUS){
                 //console.log("buton +");
                 if(vector_butoane[i].afisaj.afisaj_variabila == AFISAJ_VARIABILA_MASCA){
@@ -1431,12 +1471,17 @@ function desenarePanelConfigurareProtectii(){
       //ctx.strokeText(total_frunze_vindecate + " frunze vindecate" , 10, 500);
 }
 
-function schimbareMetodePreventie(){
+function schimbareMetodePreventieSiCuloariAfisaje(){
 
     if (zi > 0){
+        //daca a trecut intervalul necesar schimbarii metodei
         if(zi % INTERVAL_ZILE_SCHIMBARE_METODA_PREVENTIE == 0){
+
+            //excuta schimbarea
             if (metoda_preventie_schimbata == false){
                 //console.log("zi = " + zi);
+
+                //Schimbare metoda protectie jetoane
                 for(let i=1; i<vector_jetoane.length; i++){
                     //nr_stari = 3;
                     //var idx = Math.floor(Math.random() * distributieAlegereMetodaPreventie.length);
@@ -1458,8 +1503,18 @@ function schimbareMetodePreventie(){
                         vector_jetoane[i].metoda_preventie = METODA_PREVENTIE_AFARA;
                     }
                 }
+
+                //Schimbare culorii si starii afisajului
+                for(let i=0; i<vector_afisaje.length; i++){
+                    if(vector_afisaje[i].start_timer == true){
+                        vector_afisaje[i].start_timer = false;
+                    }
+                }
                 metoda_preventie_schimbata = true;
             }
+
+
+
         }
         else{
             metoda_preventie_schimbata = false;
